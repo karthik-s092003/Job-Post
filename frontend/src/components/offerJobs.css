@@ -1,0 +1,182 @@
+.backdrop{
+    width: 100%;
+    height: 100vh;
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    position: absolute;
+    top: 0px;
+    z-index: 999;
+    background-color: rgba(0, 0, 0, 0.182);
+}
+
+/* .jobOffer{
+    position: absolute;
+    top: 25%;
+    left: 35%;
+    background-color:#fff;
+    width: 400px;
+    display: flex;
+    flex-direction: column;
+    border-radius: 5px;
+    padding: 10px;
+    z-index: 9999;
+}
+
+.jobOffer .title{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 45px;
+}
+
+.jobOffer .title span{
+    font-size: 25px;
+    font-weight: 600;
+}
+
+.jobOffer .elements{
+    width: 100%;
+    height: 47px;
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 10px;
+}
+
+.elements input{
+    border: 1px solid black;
+    border-radius: 5px;
+    outline: none;
+    height: 30px;
+    padding: 5px;
+}
+
+
+.jobOffer .sub{
+    width: 98%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+}
+
+.sub button{
+    width: 80px;
+    height: 30px;
+    border-radius: 5px;
+    border: 1px solid black;
+    cursor: pointer;
+    font-size: 15px;
+    margin-top: 5px;
+}
+
+.err{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.err span{
+    color: red;
+} */
+
+.jobOffer{
+    background-color: #fff;
+    z-index: 999;
+    width: 580px;
+    height: 400px;
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    top: 20%;
+    left: 30%;
+    font-family: "Open Sans", sans-serif;
+    font-optical-sizing: auto;
+    font-style: normal;
+    font-variation-settings:"wdth" 100;
+    align-items: center;
+    border-radius: 5px;
+}
+
+.edit{
+    position: absolute;
+    top: 15%;
+    left: 25%
+}
+
+.title{
+    height: 25%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.title span{
+    font-size: 20px;  
+}
+
+
+
+.row{
+    display: flex;
+    width: 100%;
+    margin-bottom: 10px;
+    position: relative;
+    height: 15%;
+}
+
+.row .elements{
+    display: flex;
+    flex-direction: column;
+    font-family: "Open Sans", sans-serif;
+    font-optical-sizing: auto;
+    font-style: normal;
+    font-variation-settings:"wdth" 100;
+    font-size: 15px;
+    font-weight: 600;
+    gap: 3px;
+}
+
+.left{
+    position: absolute;
+    left: 30px;
+} 
+
+.right{
+    position: absolute;
+    right: 30px;
+}
+
+.elements input{
+    width: 250px;
+    height: 30px;
+    border-radius: 5px;
+    border: 1px solid black;
+    padding: 2px;
+    padding-left: 5px;
+}
+
+.sub{
+    position: absolute;
+    bottom: 23px;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.sub button{
+    border: none;
+    outline: none;
+    width: 90%;
+    height: 40px;
+    background-color: black;
+    color: #fff;
+    border-radius: 20px;
+}
+
+.err{
+    color: red;
+}

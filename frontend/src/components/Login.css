@@ -1,0 +1,226 @@
+/* 
+ @import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,300;1,100&display=swap');
+
+
+ *{
+     padding: 0;
+     margin: 0;
+     box-sizing: border-box;
+     font-family: 'Poppins', sans-serif;
+ }
+ 
+ .companyLogin{
+    width: 100%;
+     height: 100vh;
+     display: flex;
+     align-items: center;
+     justify-content: center;
+     background-color: rgba(127, 255, 212, 0.398);
+ }
+ 
+ .card{
+     width: 300px;
+     border-radius: 5px;
+     display: flex;
+     flex-direction: column;
+     align-items: center;
+     padding: 10px;
+     background-color: #fff;
+     border: 1px solid black;
+ }
+ 
+ .card .title{
+     font-size: 25px;
+     font-weight: 700;
+     margin: 10px;
+ }
+
+ .card .in{
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-bottom: 10px;
+ }
+
+ .card .set{
+    position: relative;
+    width: 250px;
+    height: 30px;
+ }
+
+.set input{
+    width: 100%;
+    height: 100%;
+    border: 1px solid black;
+    outline: none;
+    border-radius: 5px;
+    padding-left: 25px ;
+ }
+
+.set i{
+    position: absolute;
+    left: 5px;
+    top: 5px;
+    opacity: 0.6;
+}
+
+.submit{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    height: 30px;
+}
+ .submit .btn{
+    background-color:aqua;
+    text-decoration: none;
+    color: #fff;
+    border-radius: 5px;
+    width: 70px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+ }
+
+ .errors{
+    color: red;
+    margin-bottom: 2px;
+ }
+
+ .reg{
+    display: flex;
+    gap: 8px;
+    justify-content: center;
+    align-items: center;
+ }
+ .reg span{
+    font-size: 12px;
+ }
+
+ .reg .btn{
+    font-size: 12px;
+    color: red;
+ }
+  */
+
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Protest+Strike&display=swap');
+  
+ *{
+   padding: 0;
+   margin: 0;
+   box-sizing: border-box;
+   font-family: 'Poppins', sans-serif;
+}
+
+
+.companyLogin{
+   display: grid;
+   grid-template-columns: 40% 60%;
+   height: 100vh;
+}
+
+.card1{
+   background-color: black;
+   color: #fff;
+   position: relative;
+   display: flex;
+   justify-content: center;
+   align-items: center;
+   flex-direction: column;
+}
+
+.card1 .brand{
+   position: absolute;
+   top: 20px;
+   left: 20px;
+   
+}
+
+.brand h1{
+   font-family: "Protest Strike", sans-serif;
+   font-weight: 400;
+   font-style: normal;
+}
+.card1 .msgbox{
+   display: flex;
+   flex-direction: column;
+   align-items: center;
+   
+}
+
+.msgbox h2{
+   font-size: 50px;
+   font-family: "Playfair Display", serif;
+   font-optical-sizing: auto;
+   font-weight: 600;
+   font-style: normal;
+}
+
+
+.msgbox span{
+   font-size: 13px;
+}
+
+.companyLogin button{
+   border: 1px solid #fff;
+   outline: none;
+   background-color: black;
+   width: 120px;
+   height: 40px;
+   border-radius: 20px;
+   color: #fff;
+   margin-top: 10px;
+}
+
+.card2{
+   display: flex;
+   flex-direction: column;
+   align-items: center;
+   justify-content: center;
+   position: relative;
+}
+
+
+
+.title span{
+   font-size: 50px;
+   font-family: "Open Sans", sans-serif;
+  font-optical-sizing: auto;
+  font-style: normal;
+  font-variation-settings:
+    "wdth" 100;
+}
+
+.card2 .in{
+   display: flex;
+   flex-direction: column;
+   gap: 15px;
+   position: relative;
+   margin-top: 30px;
+   margin-bottom: 15px;
+}
+
+.in .set{
+   position: relative;
+}
+
+.in input{
+   border: none;
+   outline: none;
+   width: 450px;
+   height: 50px;
+   border-radius: 5px;
+   background-color: rgba(0, 0, 0, 0.05);
+   padding-left: 30px;
+}
+
+.in i{
+   position: absolute;
+   font-size: 20px;
+   left: 5px;
+   top: 13px;
+   opacity: 0.6;
+}
+
+.errors{
+   color: red;
+}

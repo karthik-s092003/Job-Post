@@ -1,0 +1,174 @@
+/* .list{
+    background-color: rgba(240, 248, 255, 0.676);
+    width: 90%;
+    height: 85%;
+    position: absolute;
+    left: 5%;
+    border-radius: 5px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 50px;
+    overflow-y: scroll;
+    gap: 15px;
+}
+
+.post{
+    background-color: #83c0c15e;
+    width: 70%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+    box-shadow: 5px 5px 10px 0px rgba(0, 0, 0, 0.161);
+    border-radius: 5px;
+    padding: 10px;
+    gap: 3px;
+}
+
+.post .icons{
+    position: absolute;
+    right: 10px;
+    top: 5%;
+    display: flex;
+    gap: 10px;
+}
+
+.icons i{
+    font-size: 20px;
+    cursor: pointer;
+}
+
+.post .one{
+    display: flex;
+    flex-direction: column;
+}
+
+.post .two{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.post .three{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+
+.post button{
+    width: 20%;
+    height: 30px;
+    border-radius: 5px;
+    background-color: rgba(240, 248, 255, 0.676);
+    border: none;
+    cursor: pointer;
+    font-size: 15px;
+} */
+
+
+.list{
+    background-color: rgba(0, 0, 0, 0.038);
+    box-shadow: 0px 0px 4px 4px #fff;
+    width: 90%;
+    height: 85%;
+    position: absolute;
+    left: 5%;
+    border-radius: 5px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 50px;
+    overflow-y: scroll;
+    gap: 15px;  
+}
+
+.list::-webkit-scrollbar {
+    display: none;
+}
+
+.post{
+    background-color: #EEEEEE;
+    width: 70%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+    box-shadow: 5px 5px 10px 0px rgba(0, 0, 0, 0.161);
+    border-radius: 5px;
+    padding: 10px;
+    gap: 3px;
+}
+
+.post .icons{
+    position: absolute;
+    right: 10px;
+    top: 5%;
+    display: flex;
+    gap: 10px;
+}
+
+.icons i{
+    font-size: 20px;
+    cursor: pointer;
+}
+
+.post .one{
+    display: flex;
+    flex-direction: column;
+}
+
+.post .two{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.post .three{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+
+.post button{
+    width: 20%;
+    height: 40px;
+    border-radius: 20px;
+    background-color: black;
+    color: #fff;
+    border: none;
+    cursor: pointer;
+    font-size: 15px;
+}
+
+
+.cmpSearch{
+    position: absolute;
+    top: 15px;
+    right: 20px;
+}
+
+.cmpSearch input{
+    border: none;
+    outline: none;
+    width: 300px;
+    height: 35px;
+    border-radius: 20px;
+    padding-left: 35px;
+    background-color: #EEEEEE;
+}
+
+.cmpSearch div{
+    position: absolute;
+    top: 4.5px;
+    left: 5px;
+    background-color: #fff;
+    width: 25px;
+    height: 25px;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}

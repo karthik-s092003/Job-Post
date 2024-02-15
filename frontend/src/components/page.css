@@ -1,0 +1,156 @@
+/* .container{
+    background-color: rgba(127, 255, 212, 0.398);
+    width: 100%;
+    height: 100vh;
+    position: relative;
+}
+
+.container .page{
+    position: absolute;
+    top: 40%;
+    left: 43%;
+}
+
+.cpmNavbar{
+    width: 100%;
+    height: 80px;
+    position: relative;
+    display: flex;
+}
+
+.cpmNavbar h1{
+    font-family: 'Poppins', sans-serif;
+    position: absolute;
+    top: 15px;
+    left: 10px;
+}
+
+.cpmNavbar .icon{
+    position: absolute;
+    right: 20px;
+    top: 27px;
+    font-size: 33px;
+}
+
+.cpmNavbar .offerJob{
+    position: absolute;
+    right: 110px;
+    top: 30px;
+}
+
+.cpmNavbar .menu{
+    width: 100px;
+    height: 70px;
+    display: flex;
+    flex-direction: column;
+    background-color: rgb(240, 248, 255);
+    position: absolute;
+    right: 10px;
+    top: 70px;
+    z-index: 999;
+    justify-content: center;
+    align-items: center;
+    padding: 5px;
+    gap: 5px;
+}
+
+.menu a{
+    text-decoration: none;
+    color: black;
+    width: 100%;  
+}
+
+.menu a:hover{
+    border-bottom: 1px solid black;
+}
+
+/* .menu a:first-child{
+    border-bottom: 1px solid black;
+} */
+
+/* .cmpSearch{
+    position: absolute;
+    left: 20px;
+    top: 10px;
+    border: 2px solid black;
+    border-radius: 5px;
+}
+
+.cmpSearch input{
+    width: 250px;
+    height: 30px;
+    border: none;
+    outline: none;
+    border-radius: 5px;
+    padding: 10px;
+    background-color: rgb(254, 254, 254);
+
+}
+
+.cmpSearch i{
+    position: absolute;
+    right: 10px;
+    top: 5px;
+    font-size: 20px;
+
+}
+
+.offerJob{
+    width: 60px;
+    height: 30px;
+    border-radius: 5px;
+    background-color: rgba(240, 248, 255, 0.676);
+    border: none;
+    cursor: pointer;
+    font-size: 15px;
+    display: flex;
+    gap: 3px;
+    align-items: center;
+    justify-content: center;
+}
+
+.offerJob i{
+    font-size: 15px;
+}
+
+.cmp{
+    position: absolute;
+    right: 10px;
+    top: 30px;
+    width: 90px;
+    height: 30px;
+    border-radius: 5px;
+    background-color: rgba(240, 248, 255, 0.676);
+    border: none;
+    cursor: pointer;
+    font-size: 15px;
+}  */
+
+.container{
+    background-color: #EEEEEE;
+}
+
+.cpmNavbar{
+    width: 100%;
+    height: 70px;
+    position: relative;
+}
+
+.cpmNavbar h1{
+    position: absolute;
+    top: 10px;
+    left: 10px;
+}
+
+.cpmNavbar .offerJob{
+    position: absolute;
+    top: 20px;
+    right: 70px;
+    border: none;
+    box-shadow: 0px 0px 2px 3px #fff;
+    border-radius: 50%; 
+    height: 30px;
+    width: 30px;
+    font-size: 23px;   
+    opacity: 0.8; 
+}
