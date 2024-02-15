@@ -1,5 +1,5 @@
 import axios from "axios";
-const FETCHURI = "http://localhost:3060/api/v1"
+const FETCHURI = "https://jobpost-cknl.onrender.com/api/v1"
 
 const get_empName = async ()=>{
     const token = localStorage.getItem('token')
