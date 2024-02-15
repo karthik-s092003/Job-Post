@@ -12,6 +12,10 @@ app.use(express.json())
 app.use("/api/v1/company",companyRouter)
 app.use("/api/v1/emp",empRouter)
 
+app.get("/",(req,res)=>{
+    res.send("hello world")
+})
+
 
 const port = process.env.PORT || 3060
 
