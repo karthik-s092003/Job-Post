@@ -1,7 +1,9 @@
 import axios from 'axios';
+const FETCHURI = "http://localhost:3060/api/v1"
+
 const companySignup = async (data)=>{
     console.log(data);
-    await fetch("http://localhost:3060/api/v1/company/register",{
+    await fetch(`${FETCHURI}/company/register`,{
       method:"POST",
       body:JSON.stringify(data),
       headers:{'content-type':'application/json'}
@@ -10,7 +12,7 @@ const companySignup = async (data)=>{
 
 const empSignup = async (data) =>{
   console.log(data);
-  const response =  await fetch("http://localhost:3060/api/v1/emp/register",{
+  const response =  await fetch(`${FETCHURI}/emp/register`,{
       method:"POST",
       body:JSON.stringify(data),
       headers:{'content-type':'application/json'}
@@ -22,7 +24,7 @@ const emp_Signup = async (data) => {
   console.log(data);
 
   try {
-    const response = await axios.post("http://localhost:3060/api/v1/emp/register", data, {
+    const response = await axios.post(`${FETCHURI}/emp/register`, data, {
       headers: {
         'Content-Type': 'application/json'
       }
@@ -40,7 +42,7 @@ const company_Signup = async (data) => {
   console.log(data);
 
   try {
-    const response = await axios.post("http://localhost:3060/api/v1/company/register", data, {
+    const response = await axios.post(`${FETCHURI}/company/register`, data, {
       headers: {
         'Content-Type': 'application/json'
       }
@@ -57,7 +59,7 @@ const company_Signup = async (data) => {
 const company_signIn = async (data) =>{
   console.log(data);
   try {
-    const response = await axios.post("http://localhost:3060/api/v1/company/login",data,{
+    const response = await axios.post(`${FETCHURI}/company/login`,data,{
       headers: {
         'Content-Type': 'application/json'
       }
@@ -74,7 +76,7 @@ const company_signIn = async (data) =>{
 const emp_signIn = async (data) =>{
   console.log(data);
   try {
-    const response = await axios.post("http://localhost:3060/api/v1/emp/login",data,{
+    const response = await axios.post(`${FETCHURI}/emp/login`,data,{
       headers: {
         'Content-Type': 'application/json'
       }
@@ -91,7 +93,7 @@ const emp_signIn = async (data) =>{
 const get_cmpName = async () =>{
   try {
     const token = localStorage.getItem('token')
-    const res = await axios.get("http://localhost:3060/api/v1/company/decode",{
+    const res = await axios.get(`${FETCHURI}/company/decode`,{
       headers: {
         Authorization: `Bearer ${token}`,
       },
@@ -107,7 +109,7 @@ const get_cmpName = async () =>{
 const createJobPost = async (data)=>{
   const token = localStorage.getItem('token')
   try {
-    const res = await axios.post("http://localhost:3060/api/v1/company/add",data,{
+    const res = await axios.post(`${FETCHURI}/company/add`,data,{
       headers: {
         Authorization: `Bearer ${token}`,
       },
@@ -124,7 +126,7 @@ const cmpJobOffers = async (data) => {
   console.log(data);
   const token = localStorage.getItem('token')
   try {
-    const res = await axios.get(`http://localhost:3060/api/v1/company/applications?companyName=${data}`,{
+    const res = await axios.get(`${FETCHURI}/company/applications?companyName=${data}`,{
       headers: {
         Authorization: `Bearer ${token}`,
       },
@@ -140,7 +142,7 @@ const deleteJobOffer = async (id)=>{
   console.log(id);
   const token = localStorage.getItem('token')
   try {
-    const res = await axios.delete(`http://localhost:3060/api/v1/company/delete?id=${id}`,{
+    const res = await axios.delete(`${FETCHURI}/company/delete?id=${id}`,{
       headers: {
         Authorization: `Bearer ${token}`,
       },
@@ -157,7 +159,7 @@ const deleteJobOffer = async (id)=>{
 const updateOfer = async(data)=>{
   const token = localStorage.getItem('token')
   try {
-    const res = await axios.patch(`http://localhost:3060/api/v1/company/update?id=${data.id}`,data,{
+    const res = await axios.patch(`${FETCHURI}/company/update?id=${data.id}`,data,{
       headers: {
         Authorization: `Bearer ${token}`,
       },
@@ -176,7 +178,7 @@ const updateOfer = async(data)=>{
 const getSearchJobs = async(data)=>{
   const token = localStorage.getItem('token')
   try {
-    const res = await axios.get(`http://localhost:3060/api/v1/company/search?companyName=${data.companyName}&title=${data.title}`,{
+    const res = await axios.get(`${FETCHURI}/company/search?companyName=${data.companyName}&title=${data.title}`,{
       headers: {
         Authorization: `Bearer ${token}`,
       },

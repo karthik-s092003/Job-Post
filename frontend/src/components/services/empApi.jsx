@@ -1,9 +1,10 @@
 import axios from "axios";
+const FETCHURI = "http://localhost:3060/api/v1"
 
 const get_empName = async ()=>{
     const token = localStorage.getItem('token')
     try {
-      const res = await axios.get("http://localhost:3060/api/v1/emp/decode",{
+      const res = await axios.get(`${FETCHURI}/emp/decode`,{
       headers: {
         Authorization: `Bearer ${token}`,
       },
@@ -18,7 +19,7 @@ const get_empName = async ()=>{
 const get_all_jobs = async ()=>{
     const token = localStorage.getItem('token')
     try {
-        const res = await axios.get("http://localhost:3060/api/v1/emp/allJobs",{
+        const res = await axios.get(`${FETCHURI}/emp/allJobs`,{
       headers: {
         Authorization: `Bearer ${token}`,
       },
@@ -34,7 +35,7 @@ const applyJob = async (data)=>{
     console.log("DATA === " ,data);
     const token = localStorage.getItem('token')
     try {
-        const res = await axios.post("http://localhost:3060/api/v1/emp/applyjob",data,{
+        const res = await axios.post(`${FETCHURI}/emp/applyjob`,data,{
             headers: {
               Authorization: `Bearer ${token}`,
             },
@@ -51,7 +52,7 @@ const get_all_appliedJobs = async (Name)=>{
     console.log("name = ",Name);
     const token = localStorage.getItem('token')
     try {
-        const res = await axios.get(`http://localhost:3060/api/v1/emp/appliedjobs?Name=${Name}`,{
+        const res = await axios.get(`${FETCHURI}/emp/appliedjobs?Name=${Name}`,{
             headers: {
               Authorization: `Bearer ${token}`,
             },
