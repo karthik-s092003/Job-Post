@@ -8,6 +8,7 @@ import CompanyPage from "./components/companyPage";
 import EmpPage from "./components/empPage";
 import EmpSignIn from "./components/empSignIn";
 import AppliedJobsList from "./components/appliedJobsList";
+import Applications from "./components/JobApplicatons";
 
 function App() {
   return (
@@ -21,6 +22,7 @@ function App() {
         <Route path="/emp/*" element={<EmpPage/>}/>
         <Route path="/emp/signin" element={<EmpSignIn />} />
         <Route path="/emp/appliedjobs" element={<AppliedJobsList/>}/>
+        <Route path="/company/applications" element={<Applications/>}/>
       </Routes>
     </Router>
   );

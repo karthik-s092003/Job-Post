@@ -62,7 +62,7 @@ function CompanyPage (){
 
     return <>
     <div className="container">
-        <CmpNavbar addJobOffer={addJobOffer}/>
+        <CmpNavbar addJobOffer={addJobOffer} add={true}/>
         <OfferList list={jobOffers} dell={removeJobs} updateItem={updateItem} search={searchObj}/>
     </div>
     </>

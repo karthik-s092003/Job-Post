@@ -54,7 +54,7 @@ function CompanySignIn(){
       <div className="title">
           <span>Sign In</span>
       </div>
-      <div className="in">
+      <div className="inn">
           <div className="set">
             <input type="text" placeholder="Company Emali Id" onChange={email} />
           <i className='bx bxs-user icon'></i>

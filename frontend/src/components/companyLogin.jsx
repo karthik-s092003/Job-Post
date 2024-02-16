@@ -68,7 +68,7 @@ function Login(){
     <div className="title">
         <span>Register your company</span>
     </div>
-    <div className="in">
+    <div className="inn">
         <div className="set">
           <input type="text" placeholder="Company name" onChange={name}/>
         <i className='bx bxs-user icon'></i>

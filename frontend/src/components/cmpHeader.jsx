@@ -130,12 +130,14 @@ function CmpNavbar(props){
     function Home(){
         navigate("/company")
     }
-    
+    function Application(){
+        navigate("/company/applications")
+    }
 
     return <>
         <div className="cpmNavbar">
             <h1>CareerNavigator</h1>
-            <button className="offerJob" onClick={Display}><i class='bx bx-plus'></i></button>
+            {props.add&&<button className="offerJob" onClick={Display}><i class='bx bx-plus'></i></button>}
             <i class='bx bx-menu menu' onClick={toggleSideBar}></i>
             {sideBar && <div className="sideBar" >
                      <div className="head">
@@ -146,7 +148,7 @@ function CmpNavbar(props){
                      </div>
                      <div className="empMenu">
                         <span className="MenuItem" onClick={Home}>Home</span>
-                        <span className="MenuItem" >Job Applications</span>
+                        <span className="MenuItem" onClick={Application}>Job Applications</span>
                      </div>
                      <button onClick={logIn}>{logedIn}</button>
                    </div> 

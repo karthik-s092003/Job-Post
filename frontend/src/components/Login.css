@@ -169,6 +169,7 @@
    border-radius: 20px;
    color: #fff;
    margin-top: 10px;
+   cursor: pointer;
 }
 
 .card2{
@@ -190,20 +191,20 @@
     "wdth" 100;
 }
 
-.card2 .in{
+.card2 .inn{
    display: flex;
    flex-direction: column;
    gap: 15px;
    position: relative;
-   margin-top: 30px;
    margin-bottom: 15px;
+   margin-top: -25px;
 }
 
-.in .set{
+.inn .set{
    position: relative;
 }
 
-.in input{
+.inn input{
    border: none;
    outline: none;
    width: 450px;
@@ -213,7 +214,7 @@
    padding-left: 30px;
 }
 
-.in i{
+.inn i{
    position: absolute;
    font-size: 20px;
    left: 5px;

@@ -67,7 +67,7 @@ function EmpLogin (){
       <div className="title">
           <span>Sign Up</span>
       </div>
-      <div className="in">
+      <div className="inn">
           <div className="set">
             <input type="text" placeholder="Name" onChange={name}/>
           <i className='bx bxs-user icon'></i>

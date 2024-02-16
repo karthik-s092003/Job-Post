@@ -189,7 +189,21 @@ const getSearchJobs = async(data)=>{
   }
 }
 
+const applications = async(companyName)=>{
+  const token = localStorage.getItem('token')
+  try {
+    const res = await axios.get(`${FETCHURI}/company/jobapplications?companyName=${companyName}`,{
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    })
+    return res.data
+  } catch (error) {
+    console.log(error);
+  }
+}
 
 
 
-export {companySignup,empSignup,emp_Signup,company_Signup,company_signIn,emp_signIn,get_cmpName,createJobPost,cmpJobOffers,deleteJobOffer,updateOfer,getSearchJobs};
+
+export {companySignup,empSignup,emp_Signup,company_Signup,company_signIn,emp_signIn,get_cmpName,createJobPost,cmpJobOffers,deleteJobOffer,updateOfer,getSearchJobs,applications};
