@@ -79,7 +79,7 @@ const applied_Jobs = async (req,res)=>{
         return res.status(400).json({msg:"Name of the company is needed"})
     }
     try {
-        const jobs = await appliedJobs.find({companyName:companyName})
+        const jobs = await Jobs.find({companyName:companyName})
         if(jobs.length===0){
             return res.status(200).json({msg:"No job applications found"})
         }
