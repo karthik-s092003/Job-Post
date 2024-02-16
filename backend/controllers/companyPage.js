@@ -147,4 +147,20 @@ const search = async (req,res)=>{
     }
 }
 
-module.exports = {createJobPost,deleteJobPost,updateJobPost,getALLJobPost,getJobPost,applied_Jobs,acceptApplicant,rejectApplicant,search}
+const getAllApplications = async (req,res)=>{
+    const {companyName} = req.query
+    if(!companyName){
+        return res.status(400).json({msg:"Name of the company is needed"})
+    }
+    try {
+        const jobs = await appliedJobs.find({companyName:companyName})
+        if(jobs.length===0){
+            return res.status(200).json({msg:"No job applications found"})
+        }
+        res.status(200).json({jobs,msg:"successfull"})
+    } catch (error) {
+        res.status(400).json({msg:"something went wrong"})
+    }
+}
+
+module.exports = {createJobPost,deleteJobPost,updateJobPost,getALLJobPost,getJobPost,applied_Jobs,acceptApplicant,rejectApplicant,search,getAllApplications}
