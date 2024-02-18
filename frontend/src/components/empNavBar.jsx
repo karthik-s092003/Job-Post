@@ -1,10 +1,10 @@
 import "./EmpNavBar.css"
 import { useState } from "react"
 import {useNavigate} from "react-router-dom";
-function EmpNavBar(props) {
-    
-    const[sideBar,setSideBar] = useState(false)
 
+function EmpNavBar(props) {
+    const[sideBar,setSideBar] = useState(false)
+    
     const navigate = useNavigate()
     function toggleSideBar (){
         const temp = !sideBar;
@@ -27,11 +27,29 @@ function EmpNavBar(props) {
     function Home(){
         navigate("/emp")
     }
+    const [notiDisp,setNotiDisp] = useState(false)
+    function toggelNotiDisp(){
+        const temp = !notiDisp
+        setNotiDisp(temp)
+    }
 
     return<>
     <div className="empNavBar">
         <h1>CareerNavigator</h1>
+        <i class='bx bxs-bell bell' onClick={toggelNotiDisp}></i>
         <i class='bx bx-menu menu' onClick={toggleSideBar}></i>
+        {notiDisp&&<div className="notifications">
+            {props.notifications.map((res)=>{
+                return <>
+                    <div className="res">
+                        <h2>{res.title}</h2>
+                        <span>{res.companyName}</span>
+                        {res.status==="accepted"?<span>Congratulations!!!</span>:<span>Better luck next time...</span>}
+                        <span>{res.msg}</span>
+                    </div>
+                </>
+            })}
+        </div>}
         {sideBar && <div className="sideBar" >
                      <div className="head">
                         <i className='bx bx-x close' onClick={toggleSideBar}></i>

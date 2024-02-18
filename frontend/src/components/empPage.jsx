@@ -5,13 +5,17 @@ import { useEffect, useState } from "react"
 import JobOffers from "./JobOffers"
 import { get_all_jobs } from "./services/empApi"
 import { applyJob } from "./services/empApi"
-
+import { getAllStatus } from "./services/empApi";
 
 function EmpPage (){
     const [emp,setEmp] = useState({Name:"LogIn",Email:""})
     const [list,setList] = useState([])
     const [logedIn,setLogedIn] = useState("Log In")
     const [appliedJobs,setAppliedJobs] = useState([])
+    const [notifications,setNotifications] = useState([])
+    useEffect(()=>{
+        
+    },[])
     useEffect(()=>{
         const decode = async ()=>{
             try {
@@ -31,7 +35,13 @@ function EmpPage (){
     },[])
 
     useEffect(()=>{
-        console.log(emp);
+        const fetch = async()=>{
+            const res = await getAllStatus(emp.Name)
+            if(res.msg==="successfull"){
+                setNotifications(res.status)
+            }
+        }
+        fetch()
     },[emp])
     
     const [applicationDisp,setApplicationDisp] = useState(false)
@@ -65,7 +75,7 @@ function EmpPage (){
 
     return <>
     <div className="container">    
-        <EmpNavBar emp={emp} logedIn={logedIn}/>
+        <EmpNavBar emp={emp} logedIn={logedIn} notifications={notifications}/>
         <JobOffers list={list} applyForJob={applyForJob} Name={emp.Name} applicationDisp={applicationDisp} toggelDisp={toggelDisp} err={err} errDisp={errDisp}/>
     </div>
     </>

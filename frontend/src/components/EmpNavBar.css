@@ -175,3 +175,39 @@
 } 
 
 
+.empNavBar .bell{
+    position: absolute;
+    font-size: 30px;
+    top: 18px;
+    right: 80px;
+}
+
+.notifications{
+    background-color: #d8d8d8;
+    width: 300px;
+    height: 400px;
+    position: absolute;
+    right: 40px;
+    top: 55px;
+    z-index: 999;
+    box-shadow: 0px 0px 4px 4px #fff;
+    border-radius: 5px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-top: 10px;
+    overflow-y: scroll;
+}
+
+.notifications::-webkit-scrollbar {
+    display: none;
+}
+.res{
+    display: flex;
+    flex-direction: column;
+    background-color: #fff;
+    width: 90%;
+    border-radius: 5px;
+    padding: 5px;
+}
+

@@ -1,5 +1,6 @@
 import axios from "axios";
 const FETCHURI = "https://jobpost-cknl.onrender.com/api/v1"
+// const FETCHURI ="http://localhost:3060/api/v1"
 
 const get_empName = async ()=>{
     const token = localStorage.getItem('token')
@@ -64,5 +65,19 @@ const get_all_appliedJobs = async (Name)=>{
     }
 }
 
+const getAllStatus = async(Name)=>{
+  const token = localStorage.getItem('token')
+  try {
+    const res = await axios.get(`${FETCHURI}/emp/status?Name=${Name}`,{
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    })
+    return res.data
+  } catch (error) {
+    console.log(error); 
+  }
+}
 
-export {get_empName,get_all_jobs,applyJob,get_all_appliedJobs}
+
+export {get_empName,get_all_jobs,applyJob,get_all_appliedJobs,getAllStatus}
