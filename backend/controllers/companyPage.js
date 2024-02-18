@@ -98,6 +98,9 @@ const acceptOrRejectApplicant = async (req,res)=>{
     let job;
     try {
         job = await appliedJobs.findOneAndDelete({Name:Name,companyName:companyName,title:title})
+        if(!job){
+            return res.status(400).json({msg:`Applicant not found`})
+         }
         await Status.create(req.body)
         res.status(200).json({msg:"successfull"})
     } catch (error) {
