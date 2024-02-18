@@ -79,15 +79,3 @@
 }
 
 
-@media (max-width:450px){
-    .container .discription{
-        display: none;
-    }
-    .career{
-        position: relative;
-    }
-
-    .homepage .links{
-        gap: 20px;
-    }
-}

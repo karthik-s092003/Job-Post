@@ -64,3 +64,31 @@
     bottom: 65px;
     color: red;
 }
+
+.msgBox{
+    width: 300px;
+    height: 180px;
+    position: absolute;
+    left: 40%;
+    top: 30%;
+}
+
+.msgBox .cont{
+    position: absolute;
+    top: 32%;
+    left: 5%;
+}
+
+.msgBox input{
+    width: 270px;
+}
+
+.msgBox button{
+    width: 100px;
+    margin-bottom: -15px;
+}
+
+.msgBox .errr{
+    position: absolute;
+    bottom: 47px;
+}

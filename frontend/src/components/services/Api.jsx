@@ -204,6 +204,23 @@ const applications = async(companyName)=>{
 }
 
 
+const acceptOrReject = async(data)=>{
+  const token = localStorage.getItem('token')
+  try {
+    const res = await axios.post(`${FETCHURI}/company/acceptorreject`,data,{
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    })
+    return res.data.msg;
+  } catch (error) {
+
+    console.log(error);
+    return error.response.data.msg
+  }
+}
 
 
-export {companySignup,empSignup,emp_Signup,company_Signup,company_signIn,emp_signIn,get_cmpName,createJobPost,cmpJobOffers,deleteJobOffer,updateOfer,getSearchJobs,applications};
+
+
+export {companySignup,empSignup,emp_Signup,company_Signup,company_signIn,emp_signIn,get_cmpName,createJobPost,cmpJobOffers,deleteJobOffer,updateOfer,getSearchJobs,applications,acceptOrReject};

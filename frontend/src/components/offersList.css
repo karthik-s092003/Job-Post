@@ -143,6 +143,17 @@
     font-size: 15px;
 }
 
+.four{
+    display: flex;
+    gap: 10px;
+}
+
+.four button{
+    width: 100px;
+    height: 30px;
+    border-radius: 20px;
+}
+
 
 .cmpSearch{
     position: absolute;
