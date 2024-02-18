@@ -1,6 +1,6 @@
 const express = require("express")
 const { login, register,decodeToken } = require("../controllers/companyLoginController")
-const {createJobPost,deleteJobPost,updateJobPost,getALLJobPost,getJobPost,applied_Jobs,acceptApplicant,rejectApplicant,search,getAllApplications} = require("../controllers/companyPage")
+const {createJobPost,deleteJobPost,updateJobPost,getALLJobPost,getJobPost,applied_Jobs,acceptOrRejectApplicant,rejectApplicant,search,getAllApplications} = require("../controllers/companyPage")
 const router = express.Router()
 const authenticationMiddleware = require("../middleware/auth")
 
@@ -13,7 +13,7 @@ router.route("/update").patch(authenticationMiddleware,updateJobPost);
 router.route("/allposts").get(authenticationMiddleware,getALLJobPost);
 router.route("/post/:id").get(authenticationMiddleware,getJobPost);
 router.route("/applications").get(authenticationMiddleware,applied_Jobs);
-router.route("/accept").patch(authenticationMiddleware,acceptApplicant);
+router.route("/acceptorreject").post(authenticationMiddleware,acceptOrRejectApplicant);
 router.route("/reject").delete(authenticationMiddleware,rejectApplicant);
 router.route("/search").get(authenticationMiddleware,search)
 router.route("/jobapplications").get(authenticationMiddleware,getAllApplications);

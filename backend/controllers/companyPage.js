@@ -1,5 +1,6 @@
 const Jobs = require("../modules/Jobs")
 const appliedJobs = require("../modules/appliedJobs")
+const Status = require("../modules/status")
 
 const getALLJobPost = async (req,res)=>{
     try {
@@ -89,23 +90,21 @@ const applied_Jobs = async (req,res)=>{
     }
 }
 
-const acceptApplicant = async (req,res)=>{
-    const {Name} = req.body
-    if(!Name){
-        return res.status(400).json({msg:"Name is needed"})
+const acceptOrRejectApplicant = async (req,res)=>{
+    const {Name,msg,status,companyName,title} = req.body
+    if(!Name||!msg||!status||!companyName||!title){
+        return res.status(400).json({msg:"Please enter all the details"})
     }
     let job;
     try {
-        job = await appliedJobs.findOneAndUpdate({Name:Name},req.body,{
-            new:true,
-            runValidators: true,
-        })
-        res.status(200).json({job,msg:"Job Applicant accepted"})
+        job = await appliedJobs.findOneAndDelete({Name:Name,companyName:companyName,title:title})
+        await Status.create(req.body)
+        res.status(200).json({msg:"successfull"})
     } catch (error) {
         if(!job){
-           return res.status(400).json({msg:`Applicant not found`})
-        }
-        res.status(400).json({msg:"something went wrong"})
+            return res.status(400).json({msg:`Applicant not found`})
+         }
+        res.status(400).json({msg:"something went wrong...."})
     }
 }
 
@@ -163,4 +162,4 @@ const getAllApplications = async (req,res)=>{
     }
 }
 
-module.exports = {createJobPost,deleteJobPost,updateJobPost,getALLJobPost,getJobPost,applied_Jobs,acceptApplicant,rejectApplicant,search,getAllApplications}
+module.exports = {createJobPost,deleteJobPost,updateJobPost,getALLJobPost,getJobPost,applied_Jobs,acceptOrRejectApplicant,rejectApplicant,search,getAllApplications}
