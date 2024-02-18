@@ -1,5 +1,6 @@
 const Jobs = require("../modules/Jobs")
 const appliedJobs = require("../modules/appliedJobs")
+const Status = require("../modules/status")
 
 const searchJobs = async (req,res)=>{
     const  {companyName,location,title,salary} = req.query;
@@ -74,4 +75,17 @@ const getAllJobs = async (req,res)=>{
     }
 }
 
-module.exports = {searchJobs,appliedJobsOfEmp,applyJob,decodeToken,getAllJobs}
+const getAllStatus = async (req,res)=>{
+    const {Name} = req.query
+    if(!Name){
+        res.status(400).json({msg:"please prvoide the name"})
+    }
+    try {
+        const status = await Status.find({Name:Name})
+        res.status(200).json({status,msg:"successfull"})
+    } catch (error) {
+        res.status(400).json({msg:"something went wrong"})
+    }
+}
+
+module.exports = {searchJobs,appliedJobsOfEmp,applyJob,decodeToken,getAllJobs,getAllStatus}
