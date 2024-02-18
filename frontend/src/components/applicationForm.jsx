@@ -1,49 +1,52 @@
 import "./applicationForm.css"
-import { useState } from "react"
+// import { useState } from "react"
 
 function ApplicationForm (props){
-    const [formData,setFormData] =  useState({
-        Name: props.Name,
-        companyName: props.companyName,
-        title: props.title,
-        salary: props.salary,
-        Qualification: "",
-        Experience: "",
-        Previous_ctc: 0,
-        ReasonToJoin: "",
-    })
+    // const [formData,setFormData] =  useState({
+    //     // Name: props.Name,
+    //     // companyName: props.companyName,
+    //     // title: props.title,
+    //     // salary: props.salary,
+    //     Qualification: "",
+    //     Experience: "",
+    //     Previous_ctc: 0,
+    //     ReasonToJoin: "",
+    // })
 
     function qualification(e) {
-        setFormData(prevData => ({
-            ...prevData,
-            Qualification:e.target.value
-          }));
+        // setFormData(prevData => ({
+        //     ...prevData,
+        //     Qualification:e.target.value
+        //   }));
+        props.qualification(e.target.value)
     }
 
     function exp(e) {
-        setFormData(prevData => ({
-            ...prevData,
-            Experience:e.target.value
-          }));
+        // setFormData(prevData => ({
+        //     ...prevData,
+        //     Experience:e.target.value
+        //   }));
+        props.exp(e.target.value)
     }
 
     function ctc(e) {
-        setFormData(prevData => ({
-            ...prevData,
-            Previous_ctc:parseFloat(e.target.value)
-          }));
+        // setFormData(prevData => ({
+        //     ...prevData,
+        //     Previous_ctc:parseFloat(e.target.value)
+        //   }));
+        props.ctc(e.target.value)
     }
     
     function reason(e) {
-        setFormData(prevData => ({
-            ...prevData,
-            ReasonToJoin:e.target.value
-          }));
+        // setFormData(prevData => ({
+        //     ...prevData,
+        //     ReasonToJoin:e.target.value
+        //   }));
+        props.reason(e.target.value)
     }
 
     function handleSubmit(){
-        console.log("formdat = ",formData);
-        props.applyForJob(formData)
+        props.handleSubmit()
     }
 
     return<>

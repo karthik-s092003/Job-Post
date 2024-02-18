@@ -1,10 +1,19 @@
-import ApplicationForm from "./applicationForm"
+
 import "./offersList.css"
 
 function  Jobs(props) {
+    const apply = async ()=>{
+        await props.setDetails({
+            companyName: props.companyName,
+            title: props.title,
+            salary: props.salary,
+        })
+        await props.setName();
+        props.toggelDisp()
+    }
 
    return <>
-        {props.applicationDisp&&<ApplicationForm toggelDisp={props.toggelDisp} companyName={props.companyName} title={props.title} salary={props.salary} Name={props.Name} applyForJob={props.applyForJob} err={props.err} errDisp={props.errDisp}/>}
+       
         <div className="post">
             <div className="one">
                  <h2>{props.companyName}</h2>
@@ -19,7 +28,7 @@ function  Jobs(props) {
             <span>{props.salary} per month</span>
             <span>{props.expiresAt}</span>
             </div>
-            <button onClick={props.toggelDisp}>Apply</button>
+            <button onClick={apply}>Apply</button>
         </div>
     </>
 }

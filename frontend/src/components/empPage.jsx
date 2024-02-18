@@ -29,6 +29,10 @@ function EmpPage (){
         }
         decode()
     },[])
+
+    useEffect(()=>{
+        console.log(emp);
+    },[emp])
     
     const [applicationDisp,setApplicationDisp] = useState(false)
     function toggelDisp(){
