@@ -4,6 +4,7 @@ import { applications } from "./services/Api"
 import MsgBox from "./msgBox"
 import Application from "./APPLICATIONS"
 import { acceptOrReject } from "./services/Api"
+import { get_cmpName } from "./services/Api";
 
 
 function Applications(){
@@ -16,15 +17,25 @@ function Applications(){
         companyName:"",
         title:""
     })
+
     useEffect(()=>{
-        const decode = async ()=>{
-            const {msg,jobs} = await applications("youTube")
-            if(msg==="successfull"){
-                setApplicationList([...jobs])
+        const getData = async () => {
+            try {
+                const {cpm} = await get_cmpName();
+                const {msg,jobs} = await applications(cpm)
+                if(msg==="successfull"){
+                    setApplicationList([...jobs])
+                }
+             
+            } catch (error) {
+                console.error("Error fetching job offers:", error);
             }
-        }
-        decode()
+        };
+        getData();
     },[])
+
+
+
     function accept(formData){
         setData(formData)
     }
