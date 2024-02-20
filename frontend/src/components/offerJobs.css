@@ -4,8 +4,9 @@
     display: none;
     flex-direction: column;
     align-items: center;
-    position: absolute;
+    position: fixed;
     top: 0px;
+    /* top: 0px; */
     z-index: 999;
     background-color: rgba(0, 0, 0, 0.182);
 }
@@ -92,6 +93,7 @@
     position: absolute;
     top: 20%;
     left: 30%;
+    top: 0px;
     font-family: "Open Sans", sans-serif;
     font-optical-sizing: auto;
     font-style: normal;
@@ -101,9 +103,10 @@
 }
 
 .edit{
-    position: absolute;
-    top: 15%;
-    left: 25%
+    position: fixed;
+    top: 25%;
+    /* top: 15%;
+    left: 25% */
 }
 
 .title{

@@ -11,15 +11,17 @@
     height: 100vh;
     background-color: rgba(0, 0, 0, 0.286);
     position: fixed;
+    top: 0px;
+    left: 0px;
 }
 
 .jobOffers{
     background-color: #fff;
     width: 600px;
     height: 300px;
-    position: absolute;
-    top: 20%;
-    left: 25%;
+    position: fixed;
+    top: 28%;
+    left: 27%;
     display: flex;
     flex-direction: column;
     align-items: center;
