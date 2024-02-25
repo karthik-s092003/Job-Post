@@ -60,7 +60,7 @@ function JobOffers(props){
         })
     }
     return <>
-    <div className="list">
+    <div className="List">
     {props.applicationDisp&&<ApplicationForm toggelDisp={props.toggelDisp} handleSubmit={handleSubmit} err={props.err} errDisp={props.errDisp} setDetails={setDetails} qualification={qualification} ctc={ctc} exp={exp} reason={reason}/>}
         {props.list.length ===0?<span>No job offers</span>:<span></span>}
         {props.list.map((job)=>{

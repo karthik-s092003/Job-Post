@@ -1,0 +1,258 @@
+
+.Container{
+    background-color: #EEEEEE;
+    width: 100%;
+    height: 100vh;
+    position: relative;
+}
+
+.Profile{
+    position: absolute;
+    background-color: #ffffffab;
+    box-shadow: 5px 5px 10px 0px rgba(0, 0, 0, 0.161);
+    width: 200px;
+    height: 50px;
+    top: 100px;
+    left: 84px;
+    border-radius: 5px;
+    z-index: 10;
+    display: flex;
+    align-items: center;
+    padding-left: 10px;
+    gap: 10px;
+}
+
+.Profile i{
+    font-size: 30px;
+}
+
+.lists{
+    background-color: rgba(0, 0, 0, 0.038);
+    box-shadow: 0px 0px 4px 4px #fff;
+    width: 90%;
+    height: 85%;
+    position: absolute;
+    left: 5%;
+    border-radius: 5px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 50px;
+    gap: 15px; 
+}
+
+.List{
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    align-items: center;
+    width: 65%;
+    position: absolute;
+    right: 20px;
+    overflow-y: scroll;
+    height: 70%;
+    top: 160px;
+    /* padding: 20px; */
+}
+
+.List::-webkit-scrollbar {
+    display: none;
+}
+
+.Post{
+    background-color: #ffffffab;
+    box-shadow: 5px 5px 10px 0px rgba(0, 0, 0, 0.161);
+    width: 75%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+    border-radius: 5px;
+    padding: 10px;
+    gap: 3px;
+}
+
+.Post .icons{
+    position: absolute;
+    right: 10px;
+    top: 5%;
+    display: flex;
+    gap: 10px;
+}
+
+.icons i{
+    font-size: 20px;
+    cursor: pointer;
+}
+
+.Post .one{
+    display: flex;
+    flex-direction: column;
+}
+
+.Post .two{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.Post .three{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.Post button{
+    width: 20%;
+    height: 40px;
+    border-radius: 20px;
+    background-color: black;
+    color: #fff;
+    border: none;
+    cursor: pointer;
+    font-size: 15px;
+}
+
+.SearchDiv{
+    position: absolute;
+    top: 15px;
+    right: 20px;
+}
+
+.SearchDiv input{
+    border: none;
+    outline: none;
+    width: 300px;
+    height: 35px;
+    border-radius: 20px;
+    padding-left: 35px;
+    background-color: #EEEEEE;
+}
+
+.SearchDiv div{
+    position: absolute;
+    top: 4.5px;
+    left: 5px;
+    background-color: #fff;
+    width: 25px;
+    height: 25px;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+
+.filtersDiv{
+    width: 30%;
+    height: 67%;
+    /* background-color: black; */
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    top: 150px;
+    left: 20px;
+    border-radius: 5px;
+    box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
+    gap: 15%;
+}
+
+
+
+
+/* Range Input Styles */
+.range-input-container {
+    margin-top: 10px;
+    width: 100%;
+    height: 20%;
+    background-color: #ffffffab;
+    border-radius: 5px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 10px;
+    position: relative;
+    box-shadow: 5px 5px 10px 0px rgba(0, 0, 0, 0.161);
+  }
+
+  .range-input-container span{
+    position: absolute;
+    top: 5px;
+  }
+
+  .range-input-container p{
+    position: absolute;
+    bottom: 5px;
+    left: 100px;
+  }
+  
+  .custom-range-input {
+    -webkit-appearance: none;
+    width: 100%;
+    height: 10px;
+    background: #d3d3d3;
+    border-radius: 5px;
+    outline: none;
+  }
+  
+  .custom-range-input::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    width: 20px;
+    height: 20px;
+    background: black;
+    border-radius: 50%;
+    cursor: pointer;
+  }
+  
+  .custom-range-input::-moz-range-thumb {
+    width: 15px;
+    height: 15px;
+    background: black;
+    border-radius: 50%;
+    cursor: pointer;
+  }
+  
+
+.selects{
+    width: 100%;
+    height: 20%;
+    position: relative;
+    box-shadow: 5px 5px 10px 0px rgba(0, 0, 0, 0.161);
+    
+}
+
+.selects i{
+    position: absolute;
+    font-size: 25px;
+    top: 25px;
+    right: 10px;
+}
+
+.range span{
+    position: absolute;
+    top: 13px;
+}
+
+.filtersDiv select{
+    width: 100%;
+    height: 100%;
+    border: none;
+    outline: none;
+    padding-top: 0.5rem; 
+    padding-bottom: 0.5rem;
+    padding-left: 1rem;
+    font-size: 1.25rem;
+    display: block;
+    width: 100%;
+    padding: 0.375rem 2.25rem 0.375rem 0.75rem;
+    font-size: 1rem;
+    font-weight: 400;
+    line-height: 1.5;
+    appearance: none;
+    background-color: #ffffffab;
+    background-position: right 0.75rem center;
+    background-size: 16px 12px;
+    border: var(--bs-border-width) solid var(--bs-border-color);
+    border-radius: 5px;
+    transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+}

@@ -14,7 +14,7 @@ function  Jobs(props) {
 
    return <>
        
-        <div className="post">
+        <div className="Post">
             <div className="one">
                  <h2>{props.companyName}</h2>
                  <span>{props.applicationEmail}</span>
