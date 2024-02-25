@@ -1,7 +1,7 @@
 const express = require("express")
 const router = express.Router()
 const { login, register } = require("../controllers/empLogin")
-const {searchJobs,appliedJobsOfEmp,applyJob,decodeToken,getAllJobs,getAllStatus} = require("../controllers/empPage")
+const {searchJobs,appliedJobsOfEmp,applyJob,decodeToken,getAllJobs,getAllStatus,getLocationList,getCompanyList} = require("../controllers/empPage")
 const authenticationMiddleware = require("../middleware/empAuth")
 
 router.route("/register").post(register)
@@ -12,5 +12,7 @@ router.route("/applyjob").post(authenticationMiddleware,applyJob)
 router.route("/decode").get(authenticationMiddleware,decodeToken);
 router.route("/allJobs").get(authenticationMiddleware,getAllJobs);
 router.route("/status").get(authenticationMiddleware,getAllStatus);
+router.route("/loc").get(authenticationMiddleware,getLocationList);
+router.route("/cmp").get(authenticationMiddleware,getCompanyList);
 
 module.exports = router;

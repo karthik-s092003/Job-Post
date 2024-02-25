@@ -88,4 +88,23 @@ const getAllStatus = async (req,res)=>{
     }
 }
 
-module.exports = {searchJobs,appliedJobsOfEmp,applyJob,decodeToken,getAllJobs,getAllStatus}
+
+const getLocationList = async (req,res)=>{
+    try {
+        const loc = await Jobs.distinct("location")
+        res.status(200).json(loc)
+    } catch (error) {
+        res.status(400).json({msg:"something went wrong..."})
+    }
+}
+
+const getCompanyList = async (req,res)=>{
+    try {
+        const cmp = await Jobs.distinct("companyName")
+        res.status(200).json(cmp)
+    } catch (error) {
+        res.status(400).json({msg:"something went wrong..."})
+    }
+}
+
+module.exports = {searchJobs,appliedJobsOfEmp,applyJob,decodeToken,getAllJobs,getAllStatus,getLocationList,getCompanyList}
