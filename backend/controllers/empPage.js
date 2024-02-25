@@ -15,7 +15,7 @@ const searchJobs = async (req,res)=>{
         queryObject.title = { $regex: title, $options: 'i' };
     }
     if(salary){
-        queryObject.salary = {$lte:salary}
+        queryObject.salary = {$gte:salary}
     }
     let Job;
     try {
