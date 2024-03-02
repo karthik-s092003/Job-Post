@@ -25,7 +25,7 @@ const get_all_jobs = async ()=>{
         Authorization: `Bearer ${token}`,
       },
     })
-    console.log(res.data);
+    console.log("new test = ",res.data);
     return res.data;
     } catch (error) {
         return ([])

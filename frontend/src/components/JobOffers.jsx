@@ -3,6 +3,7 @@ import Jobs from "./job"
 import { useState } from "react"
 import ApplicationForm from "./applicationForm"
 import {get_empName} from "./services/empApi"
+import logo from '../assets/load.gif'
 
 function JobOffers(props){
     const [formData,setFormData] =  useState({
@@ -62,8 +63,8 @@ function JobOffers(props){
     return <>
     <div className="List">
     {props.applicationDisp&&<ApplicationForm toggelDisp={props.toggelDisp} handleSubmit={handleSubmit} err={props.err} errDisp={props.errDisp} setDetails={setDetails} qualification={qualification} ctc={ctc} exp={exp} reason={reason}/>}
-        {props.list.length ===0?<span>No job offers</span>:<span></span>}
-        {props.list.map((job)=>{
+        {props.loading === false?<span></span>:<img src={logo} alt="loading..." className="loader"/>}
+        {(props.list.length === 0 && props.loading === false)? <span>No jobs found</span> : props.list.map((job)=>{
             return <Jobs 
             id={job._id}
             companyName={job.companyName}

@@ -1,5 +1,6 @@
 import "./offersList.css"
 import Post from "./post"
+import logo from '../assets/load.gif'
 
 function OfferList (props) {
     function search(e){
@@ -13,8 +14,8 @@ function OfferList (props) {
                     <i class='bx bx-search'></i>    
                 </div>
             </div>
-        {props.list.length ===0?<span>No job offers</span>:<span></span>}
-        {props.list.map((job)=>{
+        {props.msg ===""?<img src={logo} alt="loading..." className="loader"/>:<span></span>}
+        {(props.list.length===0 && props.msg !=="" )? <span>No jobs fond</span> :props.list.map((job)=>{
             return <Post 
             id={job._id}
             companyName={job.companyName}

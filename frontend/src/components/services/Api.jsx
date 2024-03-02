@@ -132,7 +132,7 @@ const cmpJobOffers = async (data) => {
         Authorization: `Bearer ${token}`,
       },
     })
-    return res.data.jobs;
+    return res.data;
   } catch (error) {
     console.log(error);
   }

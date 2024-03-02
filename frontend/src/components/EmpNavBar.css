@@ -197,6 +197,7 @@
     align-items: center;
     padding-top: 10px;
     overflow-y: scroll;
+    gap: 10px;
 }
 
 .notifications::-webkit-scrollbar {

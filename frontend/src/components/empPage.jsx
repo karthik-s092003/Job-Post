@@ -10,6 +10,7 @@ import { getAllStatus } from "./services/empApi";
 import { getAllLocations } from "./services/empApi"
 import { searchFilter } from "./services/empApi"
 
+
 function EmpPage (){
     const [emp,setEmp] = useState({Name:"LogIn",Email:""})
     const [list,setList] = useState([])
@@ -18,6 +19,7 @@ function EmpPage (){
     const [notifications,setNotifications] = useState([])
     const [Loc,setLoc] = useState([])
     const [Cmp,setCmp] = useState([])
+    const [loading,setLoading] = useState(true)
     const [search,setSearch] = useState({
         companyName:"",
         location:"",
@@ -34,6 +36,7 @@ function EmpPage (){
                 setCmp([...cmp])
                 setLoc([...loc])
                 setList([...res])
+                setLoading(false)
                 setEmp(data)
                 
                 if(data.Name !== "Log In"){
@@ -209,7 +212,7 @@ function EmpPage (){
         
             
         </div>
-        <JobOffers list={list} applyForJob={applyForJob} Name={emp.Name} applicationDisp={applicationDisp} toggelDisp={toggelDisp} err={err} errDisp={errDisp}/>
+        <JobOffers list={list} applyForJob={applyForJob} Name={emp.Name} applicationDisp={applicationDisp} toggelDisp={toggelDisp} err={err} errDisp={errDisp} loading={loading}/>
     </div>
     </>
 }

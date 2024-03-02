@@ -10,12 +10,14 @@ import { getSearchJobs } from "./services/Api";
 function CompanyPage (){
     const [jobOffers,setJobOffers] = useState([])
     const [cmp,setCmp] = useState("")
+    const [msg,setMsg] = useState("")
     useEffect(() => {
         const getData = async () => {
             try {
                 const {cpm} = await get_cmpName();
-                const res = await cmpJobOffers(cpm);
-                setJobOffers([...res]);
+                const {jobs,msg} = await cmpJobOffers(cpm);
+                setJobOffers([...jobs]);
+                setMsg(msg);
                 setCmp(cpm)
             } catch (error) {
                 console.error("Error fetching job offers:", error);
@@ -63,7 +65,7 @@ function CompanyPage (){
     return <>
     <div className="container">
         <CmpNavbar addJobOffer={addJobOffer} add={true}/>
-        <OfferList list={jobOffers} dell={removeJobs} updateItem={updateItem} search={searchObj}/>
+        <OfferList list={jobOffers} dell={removeJobs} updateItem={updateItem} search={searchObj} msg={msg}/>
     </div>
     </>
 }

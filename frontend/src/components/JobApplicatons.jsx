@@ -5,11 +5,13 @@ import MsgBox from "./msgBox"
 import Application from "./APPLICATIONS"
 import { acceptOrReject } from "./services/Api"
 import { get_cmpName } from "./services/Api";
+import logo from '../assets/load.gif'
 
 
 function Applications(){
     const [msg,setMsg] = useState(false)
     const [applicationList,setApplicationList] = useState([])
+    const [m,setM] = useState("");
     const [data,setData] = useState({
         Name:"",
         msg:"",
@@ -25,6 +27,9 @@ function Applications(){
                 const {msg,jobs} = await applications(cpm)
                 if(msg==="successfull"){
                     setApplicationList([...jobs])
+                    setM(msg);
+                }else{
+                    setM(msg);
                 }
              
             } catch (error) {
@@ -83,10 +88,10 @@ function Applications(){
         <CmpNavbar add={false}/>
         <div className="list">
         {msg && <MsgBox toggelDisp={toggelDisp} message={message} handleSubmit={handleSubmit} errDisp={errDisp} err={err}/> }
-        {applicationList.length === 0? <span>No jobs found...</span>:<span></span>}
-    {applicationList.map((job)=>{
+        {m === ""?  <img src={logo} alt="loading..." className="loader"/>:<span></span>}
+    {(applicationList.length === 0 && m!=="") ? <span>{m}</span> :applicationList.map((job)=>{
             return <Application Name={job.Name} companyName={job.companyName} title={job.title} Qualification={job.Qualification} Experience={job.Experience} Previous_ctc={job.Previous_ctc} ReasonToJoin={job.ReasonToJoin} accept={accept} reject={reject} toggelDisp={toggelDisp} error={error}/>
-       })}
+       }) }
         </div>
         </div>
     
