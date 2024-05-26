@@ -2,7 +2,7 @@ import { IoLocationOutline } from "react-icons/io5";
 
 function Card(){
     return <>
-        <div className="bg-white p-6 flex-col mb-4">
+        <div className="bg-white p-6 flex-col mb-4 cursor-pointer rounded-md">
             <div className="flex gap-4 items-center">
                 <img src="https://firebasestorage.googleapis.com/v0/b/otp-project-329ec.appspot.com/o/x-logo-twitter-elon-musk_dezeen_2364_col_0.webp?alt=media&token=46a652da-1ad1-4f39-a15e-b1fa4f376951" alt="" className="w-10 h-10"/>
                 <div className="flex-col gap-0">
