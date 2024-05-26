@@ -9,6 +9,7 @@ import EmpPage from "./components/empPage";
 import EmpSignIn from "./components/empSignIn";
 import AppliedJobsList from "./components/appliedJobsList";
 import Applications from "./components/JobApplicatons";
+import JobPortalDashBoard from "./jobPortal/home";
 
 function App() {
   return (
@@ -23,6 +24,7 @@ function App() {
         <Route path="/emp/signin" element={<EmpSignIn />} />
         <Route path="/emp/appliedjobs" element={<AppliedJobsList/>}/>
         <Route path="/company/applications" element={<Applications/>}/>
+        <Route path="/job-portal" element={<JobPortalDashBoard/>}></Route>
       </Routes>
     </Router>
   );

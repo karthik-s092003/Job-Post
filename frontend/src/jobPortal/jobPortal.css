@@ -1,0 +1,10 @@
+.cards::-webkit-scrollbar {
+    display: none;
+  }
+
+.box{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
