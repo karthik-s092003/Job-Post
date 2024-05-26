@@ -4,8 +4,26 @@ import NavBar from "./navbar";
 import "../index.css"
 import "./jobPortal.css"
 import Details from "./details";
+import { get_all_jobs } from "./services/jobportal";
+import { useEffect, useState } from "react"
 
 function JobPortalDashBoard() {
+    const [list,setList] = useState([])
+    useEffect(()=>{
+      const decode = async ()=>{
+          try {
+              const res = await get_all_jobs()
+              setList([...res])
+          } catch (error) {
+              console.error("Error fetching data", error);
+          }
+      }
+        decode()
+    },[])
+
+    useEffect(()=>{
+      console.log(list);
+    },[list])
     return <>
     <div className="w-screen h-screen ">
         <NavBar/>
@@ -116,9 +134,7 @@ function JobPortalDashBoard() {
 
           <div className="w-full h-[88%] flex">
             <div className="w-[40%] h-full flex-col overflow-y-scroll p-4 cards pt-0">
-              <Card/>
-              <Card/>
-              <Card/>
+              {list.map((li)=>{return <Card job={li}/>} )}
             </div>
             <Details/>
           </div> 

@@ -42,7 +42,7 @@ function EmpLogin (){
       const handleSubmit =async ()=>{
         const res =await emp_Signup(data);
         if(res === "successfull"){
-          navigate("/emp");
+          navigate("/job-portal");
         }
         else{
           setMsg(res)

@@ -1,5 +1,6 @@
 const Jobs = require("../modules/Jobs")
 const appliedJobs = require("../modules/appliedJobs")
+const company = require("../modules/company")
 const Status = require("../modules/status")
 
 const getALLJobPost = async (req,res)=>{
@@ -16,15 +17,11 @@ const getALLJobPost = async (req,res)=>{
 
 
 const createJobPost = async (req,res)=>{
-    const {title,jobDescription,companyName, location,salary,applicationEmail,expiresAt} = req.body
-    if(!title||!jobDescription||!companyName|| !location||!salary||!applicationEmail||!expiresAt){
-        return res.status(400).json({msg:"Make sure you enter all the details"})
-    }
     try {
         const job = await Jobs.create(req.body)
         res.status(201).json({ job,msg:"successfull" })
     } catch (error) {
-        res.status(400).json({msg:"something went wrong"})
+        res.status(400).json({msg:error.message})
     }
 }
 
@@ -165,4 +162,14 @@ const getAllApplications = async (req,res)=>{
     }
 }
 
-module.exports = {createJobPost,deleteJobPost,updateJobPost,getALLJobPost,getJobPost,applied_Jobs,acceptOrRejectApplicant,rejectApplicant,search,getAllApplications}
+const get_Company_details = async(req,res)=>{
+    const {id} = req.query
+    try {
+        const response = await company.find({_id:id})
+        res.status(200).json({companyName:response[0].companyName,companyLogo:response[0].companyLogo})
+    } catch (error) {
+        res.status(400).json({msg:"something went wrong"})
+    }
+}
+
+module.exports = {createJobPost,deleteJobPost,updateJobPost,getALLJobPost,getJobPost,applied_Jobs,acceptOrRejectApplicant,rejectApplicant,search,getAllApplications,get_Company_details}

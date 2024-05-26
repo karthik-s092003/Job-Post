@@ -7,6 +7,10 @@ const JobsSchema = new mongoose.Schema({
         trim:true,
         maxlength:[20,'Job title can not be more than 20 characters']
     },
+    companyId : {
+        type: mongoose.Schema.Types.ObjectId,
+        required:true,
+    },
     jobDescription: {
         type: String,
         required: true,
@@ -28,6 +32,20 @@ const JobsSchema = new mongoose.Schema({
     applicationEmail: {
         type: String,
         required: true,
+    },
+    skills: {
+        type: [String],
+        required: false,
+    },
+    workspaceType: {
+        type: String,
+        enum: ['On-site', 'Remote', 'Hybrid'],
+        required: true,
+    },
+    jobType: {
+        type: String,
+        enum: ['Full-time','Part-time','Internship'],
+        required:true,
     },
     createdAt: {
         type: Date,

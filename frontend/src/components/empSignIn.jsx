@@ -29,7 +29,7 @@ function EmpSignIn(){
        const res =await emp_signIn(data);
        console.log(res);
        if(res==="successfull"){
-        navigate("/emp")
+        navigate("/job-portal")
        }
        else{
         setMsg(res);

@@ -30,9 +30,6 @@ const login = async (req,res)=>{
 
 const register = async (req,res)=>{
     const {companyName,Email,Password,confirmPassword} = req.body
-    if(!companyName || !Email || !Password || !confirmPassword){
-        return res.status(400).json({msg:"The company name,Email Id and Password must be provoided"})
-    }
     if(Password !== confirmPassword){
         return res.status(400).json({msg:"incorrect password"})
     }
