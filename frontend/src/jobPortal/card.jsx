@@ -17,7 +17,7 @@ function Card(props){
           decode()
       },[id])
     return <>
-        <div className="bg-white p-6 flex-col mb-4 cursor-pointer rounded-md">
+        <div className={`bg-white p-6 flex-col mb-4 cursor-pointer rounded-md ${props.isSelected ? 'border-blue-500 border-2' : 'border-gray-300'}`} onClick={props.onClick}>
             <div className="flex gap-4 items-center">
                 <img src={companyDetails.companyLogo} alt="" className="w-10 h-10"/>
                 <div className="flex-col gap-0">

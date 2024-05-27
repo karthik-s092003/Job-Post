@@ -6,9 +6,23 @@ import "./jobPortal.css"
 import Details from "./details";
 import { get_all_jobs } from "./services/jobportal";
 import { useEffect, useState } from "react"
+import { get_company_details } from "./services/jobportal";
 
 function JobPortalDashBoard() {
     const [list,setList] = useState([])
+    const [selectedJob, setSelectedJob] = useState(null);
+    const [companyDetails,setcompanyDetails] = useState({});
+
+    const handleCardClick = async (job) => {
+      setSelectedJob(job);
+      console.log(job);
+      try {
+        const res = await get_company_details(job.companyId)
+        setcompanyDetails(res);
+    } catch (error) {
+        console.error("Error fetching data", error);
+    }
+    };
     useEffect(()=>{
       const decode = async ()=>{
           try {
@@ -23,7 +37,8 @@ function JobPortalDashBoard() {
 
     useEffect(()=>{
       console.log(list);
-    },[list])
+      console.log(companyDetails);
+    },[list,companyDetails])
     return <>
     <div className="w-screen h-screen ">
         <NavBar/>
@@ -134,9 +149,9 @@ function JobPortalDashBoard() {
 
           <div className="w-full h-[88%] flex">
             <div className="w-[40%] h-full flex-col overflow-y-scroll p-4 cards pt-0">
-              {list.map((li)=>{return <Card job={li}/>} )}
+              {list.map((li)=>{return <Card key={li._id} job={li} onClick={() => handleCardClick(li)} isSelected={selectedJob === li}/>} )}
             </div>
-            <Details/>
+            <Details selectedJob={selectedJob} companyDetails={companyDetails}/>
           </div> 
         </div>
           
