@@ -3,7 +3,7 @@ const appliedJobs = require("../modules/appliedJobs")
 const Status = require("../modules/status")
 
 const searchJobs = async (req,res)=>{
-    const  {companyName,location,title,salary} = req.query;
+    const  {companyName,location,title,salary,jobType,workspaceType} = req.query;
     const queryObject = {}
     if(companyName){
         queryObject.companyName = companyName
@@ -17,15 +17,21 @@ const searchJobs = async (req,res)=>{
     if(salary){
         queryObject.salary = {$gte:salary}
     }
-    let Job;
+    if(jobType){
+        queryObject.jobType = jobType
+    }
+    if(workspaceType){
+        queryObject.workspaceType = workspaceType
+    }
     try {
-        Job =await Jobs.find(queryObject)
-        res.status(200).json(Job)
-    } catch (error) {
-        if(!Job){
-            return res.status(201).json("NO job offers found...")
+        const jobs = await Jobs.find(queryObject); 
+        if (jobs.length === 0) {
+            return res.status(201).json({ msg: "No job offers found..." });
         }
-        res.status(400).json({msg:"something went wrong..."})
+        res.status(200).json({ jobs, msg: "Jobs found successfully..." });
+    } catch (error) {
+        console.error(error.message); 
+        res.status(400).json(error.message);
     }
     
 }

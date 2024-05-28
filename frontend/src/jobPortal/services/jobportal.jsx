@@ -63,5 +63,28 @@ const get_company_details = async (id)=>{
     }
 }
 
-export {company_LogIn,company_SignIn,get_all_jobs,get_company_details}
+const searchFilter = async(data)=>{
+  const token = localStorage.getItem('token')
+  let queryParams = [];
+  for (let key in data) {
+    if (data[key] !== undefined && data[key] !== null) {
+      queryParams.push(`${encodeURIComponent(key)}=${encodeURIComponent(data[key])}`);
+    }
+  }
+  const queryString = queryParams.join('&');
+
+  const url = `${FETCHURI}/emp/search?${queryString}`;
+  try {
+    const res = await axios.get(url,{
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    })
+    return res.data
+  } catch (error) {
+    console.log(error); 
+  }
+}
+
+export {company_LogIn,company_SignIn,get_all_jobs,get_company_details,searchFilter}
   

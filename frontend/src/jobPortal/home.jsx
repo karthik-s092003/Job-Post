@@ -7,11 +7,18 @@ import Details from "./details";
 import { get_all_jobs } from "./services/jobportal";
 import { useEffect, useState } from "react"
 import { get_company_details } from "./services/jobportal";
+import { searchFilter } from "./services/jobportal";
 
 function JobPortalDashBoard() {
     const [list,setList] = useState([])
     const [selectedJob, setSelectedJob] = useState(null);
     const [companyDetails,setcompanyDetails] = useState({});
+    const [jobtype, setjobtype] = useState({
+      fullTime: false,
+      partTime: false,
+      internship: false,
+      contract:false,
+    });
 
     const handleCardClick = async (job) => {
       setSelectedJob(job);
@@ -39,6 +46,56 @@ function JobPortalDashBoard() {
       console.log(list);
       console.log(companyDetails);
     },[list,companyDetails])
+
+    const searchBar = async (e)=>{
+      try {
+        const {jobs} = await searchFilter({
+          title:e.target.value,
+      })
+      if(!jobs){
+        setList([])
+      }
+      setList([...jobs])
+      } catch (error) {
+        console.log(error);
+      }
+    }
+
+    const handleCheckboxChange = async (event)=>{
+      const { name,value } = event.target;
+      const newjobtype = Object.keys(jobtype).reduce((acc, key) => {
+        acc[key] = key === name;
+        return acc;
+      }, {});
+      setjobtype(newjobtype)
+      try {
+        const {jobs} = await searchFilter({
+          jobType:value,
+      })
+      if(!jobs){
+        setList([])
+      }
+      setList([...jobs])
+      } catch (error) {
+        console.log(error);
+      }
+    }
+
+    const clearFilter =async ()=>{
+      setjobtype({
+        fullTime: false,
+        partTime: false,
+        internship: false,
+        contract:false,
+      })
+      try {
+        const res = await get_all_jobs()
+        setList([...res])
+    } catch (error) {
+        console.error("Error fetching data", error);
+    }
+    }
+
     return <>
     <div className="w-screen h-screen ">
         <NavBar/>
@@ -46,25 +103,25 @@ function JobPortalDashBoard() {
             <div className="w-[20%] h-full overflow-y-scroll bg-white">
           <div className="border-b p-4 h-16 flex items-center gap-24">
             <span className="uppercase font-semibold text-xs">Filter</span>
-            <span className="uppercase font-semibold text-xs text-blue-600">Clear All</span>
+            <span onClick={clearFilter} className="uppercase font-semibold text-xs text-blue-600 cursor-pointer">Clear All</span>
           </div>
           <div className="border-b p-4 h-40">
             <span className="uppercase font-semibold text-xs">Job Type</span>
             <ul className="pl-2 py-4 flex-col">
                 <li className="flex gap-2 items-center mb-2" >
-                <input id="link-checkbox" type="checkbox" value="" className=" before:content[''] relative h-3 w-3 cursor-pointer appearance-none rounded-sm border border-blue-gray-200 transition-all before:absolute before:top-2/4 before:left-2/4 before:block before:h-6 before:w-6 before:-translate-y-2/4 before:-translate-x-2/4 before:rounded-full before:bg-blue-gray-500 before:opacity-0 before:transition-opacity checked:border-blue-500 checked:bg-blue-500 checked:before:bg-blue-500 hover:before:opacity-10"/>
+                <input id="link-checkbox" name="fullTime" checked={jobtype.fullTime} onChange={handleCheckboxChange} type="checkbox" value="Full-time" className=" before:content[''] relative h-3 w-3 cursor-pointer appearance-none rounded-sm border border-blue-gray-200 transition-all before:absolute before:top-2/4 before:left-2/4 before:block before:h-6 before:w-6 before:-translate-y-2/4 before:-translate-x-2/4 before:rounded-full before:bg-blue-gray-500 before:opacity-0 before:transition-opacity checked:border-blue-500 checked:bg-blue-500 checked:before:bg-blue-500 hover:before:opacity-10"/>
                   <p className="font-semibold text-xs">FULL TIME</p>
                 </li>
                 <li className="flex gap-2 items-center mb-2" >
-                <input id="link-checkbox" type="checkbox" value="" className=" before:content[''] relative h-3 w-3 cursor-pointer appearance-none rounded-sm border border-blue-gray-200 transition-all before:absolute before:top-2/4 before:left-2/4 before:block before:h-6 before:w-6 before:-translate-y-2/4 before:-translate-x-2/4 before:rounded-full before:bg-blue-gray-500 before:opacity-0 before:transition-opacity checked:border-blue-500 checked:bg-blue-500 checked:before:bg-blue-500 hover:before:opacity-10"/>
+                <input id="link-checkbox" name="partTime" checked={jobtype.partTime} onChange={handleCheckboxChange} type="checkbox" value="Part-time" className=" before:content[''] relative h-3 w-3 cursor-pointer appearance-none rounded-sm border border-blue-gray-200 transition-all before:absolute before:top-2/4 before:left-2/4 before:block before:h-6 before:w-6 before:-translate-y-2/4 before:-translate-x-2/4 before:rounded-full before:bg-blue-gray-500 before:opacity-0 before:transition-opacity checked:border-blue-500 checked:bg-blue-500 checked:before:bg-blue-500 hover:before:opacity-10"/>
                   <p className="font-semibold text-xs">PART TIME</p>
                 </li>
                 <li className="flex gap-2 items-center mb-2" >
-                <input id="link-checkbox" type="checkbox" value="" className=" before:content[''] relative h-3 w-3 cursor-pointer appearance-none rounded-sm border border-blue-gray-200 transition-all before:absolute before:top-2/4 before:left-2/4 before:block before:h-6 before:w-6 before:-translate-y-2/4 before:-translate-x-2/4 before:rounded-full before:bg-blue-gray-500 before:opacity-0 before:transition-opacity checked:border-blue-500 checked:bg-blue-500 checked:before:bg-blue-500 hover:before:opacity-10"/>
+                <input id="link-checkbox" name="internship" checked={jobtype.internship} onChange={handleCheckboxChange} type="checkbox" value="Internship" className=" before:content[''] relative h-3 w-3 cursor-pointer appearance-none rounded-sm border border-blue-gray-200 transition-all before:absolute before:top-2/4 before:left-2/4 before:block before:h-6 before:w-6 before:-translate-y-2/4 before:-translate-x-2/4 before:rounded-full before:bg-blue-gray-500 before:opacity-0 before:transition-opacity checked:border-blue-500 checked:bg-blue-500 checked:before:bg-blue-500 hover:before:opacity-10"/>
                   <p className="font-semibold text-xs">INTERNSHIP</p>
                 </li>
                 <li className="flex gap-2 items-center mb-2" >
-                <input id="link-checkbox" type="checkbox" value="" className=" before:content[''] relative h-3 w-3 cursor-pointer appearance-none rounded-sm border border-blue-gray-200 transition-all before:absolute before:top-2/4 before:left-2/4 before:block before:h-6 before:w-6 before:-translate-y-2/4 before:-translate-x-2/4 before:rounded-full before:bg-blue-gray-500 before:opacity-0 before:transition-opacity checked:border-blue-500 checked:bg-blue-500 checked:before:bg-blue-500 hover:before:opacity-10"/>
+                <input id="link-checkbox" name="contract" checked={jobtype.contract} onChange={handleCheckboxChange} type="checkbox" value="Contract" className=" before:content[''] relative h-3 w-3 cursor-pointer appearance-none rounded-sm border border-blue-gray-200 transition-all before:absolute before:top-2/4 before:left-2/4 before:block before:h-6 before:w-6 before:-translate-y-2/4 before:-translate-x-2/4 before:rounded-full before:bg-blue-gray-500 before:opacity-0 before:transition-opacity checked:border-blue-500 checked:bg-blue-500 checked:before:bg-blue-500 hover:before:opacity-10"/>
                   <p className="font-semibold text-xs">CONTRACT</p>
                 </li>
             </ul>
@@ -137,7 +194,7 @@ function JobPortalDashBoard() {
         <div className="w-[80%] h-full bg-slate-100 p-10 flex-col">
           <div className="flex gap-5">
             <div className=" relative w-[90%] h-10">
-              <input type="text" className=" w-full h-full rounded-sm p-4 font-semibold text-xs" placeholder="Title"/>
+              <input type="text" className=" w-full h-full rounded-sm p-4 font-semibold text-xs" placeholder="Title" onChange={searchBar}/>
               <FiSearch className=" absolute right-4 top-3 opacity-40"/>
             </div>
             <button type="button" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-md text-sm px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">Search</button>
@@ -149,10 +206,24 @@ function JobPortalDashBoard() {
 
           <div className="w-full h-[88%] flex">
             <div className="w-[40%] h-full flex-col overflow-y-scroll p-4 cards pt-0">
-              {list.map((li)=>{return <Card key={li._id} job={li} onClick={() => handleCardClick(li)} isSelected={selectedJob === li}/>} )}
+              {list.length > 0 ? (
+                list.map((li) => (
+                  <Card
+                    key={li._id}
+                    job={li}
+                    onClick={() => handleCardClick(li)}
+                    isSelected={selectedJob === li}
+                  />
+                ))
+              ) : (
+              <p>No jobs found</p>
+              )}
             </div>
-            <Details selectedJob={selectedJob} companyDetails={companyDetails}/>
+            <Details selectedJob={selectedJob} companyDetails={companyDetails} />
           </div> 
+
+
+
         </div>
           
       </div>
