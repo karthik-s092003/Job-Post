@@ -6,8 +6,9 @@ import "./jobPortal.css"
 import Details from "./details";
 import { get_all_jobs } from "./services/jobportal";
 import { useEffect, useState } from "react"
-import { get_company_details } from "./services/jobportal";
+import { get_company_details,getAllLocations,getAllCmp } from "./services/jobportal";
 import { searchFilter } from "./services/jobportal";
+
 
 function JobPortalDashBoard() {
     const [list,setList] = useState([])
@@ -19,6 +20,16 @@ function JobPortalDashBoard() {
       internship: false,
       contract:false,
     });
+    const [cmp,setCpm] = useState([])
+    const [loc,setLoc] = useState([])
+    const [cmpCheckedCheckbox, setCmpCheckedCheckbox] = useState(null);
+    const [locCheckedCheckbox, setLocCheckedCheckbox] = useState(null);
+    const [searchObject , setSearchObejct] = useState({
+      jobType:"",
+      location:"",
+      companyName:"",
+      title:""
+    })
 
     const handleCardClick = async (job) => {
       setSelectedJob(job);
@@ -34,6 +45,10 @@ function JobPortalDashBoard() {
       const decode = async ()=>{
           try {
               const res = await get_all_jobs()
+              const companies = await getAllCmp()
+              const locations = await getAllLocations()
+              setCpm([...companies])
+              setLoc([...locations])
               setList([...res])
           } catch (error) {
               console.error("Error fetching data", error);
@@ -43,15 +58,21 @@ function JobPortalDashBoard() {
     },[])
 
     useEffect(()=>{
-      console.log(list);
+      console.log(list,cmp,loc);
       console.log(companyDetails);
-    },[list,companyDetails])
+    },[list,companyDetails,cmp,loc])
 
     const searchBar = async (e)=>{
       try {
+        setSearchObejct((prevValue)=>{
+          return {...prevValue,title:e.target.value}
+        })
         const {jobs} = await searchFilter({
-          title:e.target.value,
-      })
+          jobType:searchObject.jobType,
+          location:searchObject.location,
+          companyName:searchObject.companyName,
+          title:e.target.value
+        })
       if(!jobs){
         setList([])
       }
@@ -69,9 +90,15 @@ function JobPortalDashBoard() {
       }, {});
       setjobtype(newjobtype)
       try {
+        setSearchObejct((prevValue)=>{
+          return {...prevValue,jobType:value}
+        })
         const {jobs} = await searchFilter({
           jobType:value,
-      })
+          location:searchObject.location,
+          companyName:searchObject.companyName,
+          title:searchObject.title
+        })
       if(!jobs){
         setList([])
       }
@@ -81,12 +108,24 @@ function JobPortalDashBoard() {
       }
     }
 
+    useEffect(()=>{
+      console.log("search object = ",searchObject);
+    },[searchObject])
+
     const clearFilter =async ()=>{
       setjobtype({
         fullTime: false,
         partTime: false,
         internship: false,
         contract:false,
+      })
+      setCmpCheckedCheckbox(null)
+      setLocCheckedCheckbox(null)
+      setSearchObejct({
+        jobType:"",
+        location:"",
+        companyName:"",
+        title:""
       })
       try {
         const res = await get_all_jobs()
@@ -95,6 +134,49 @@ function JobPortalDashBoard() {
         console.error("Error fetching data", error);
     }
     }
+
+    const handleLocCheckbox =async (loc) => {
+      setLocCheckedCheckbox(loc);
+      try {
+        setSearchObejct((prevValue)=>{
+          return {...prevValue,location:loc}
+        })
+        const {jobs} = await searchFilter({
+          jobType:searchObject.jobType,
+          location:loc,
+          companyName:searchObject.companyName,
+          title:searchObject.title
+        })
+      if(!jobs){
+        setList([])
+      }
+      setList([...jobs])
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
+   const handleCmpCheckbox = async (company) => {
+    setCmpCheckedCheckbox(company);
+    console.log("cmp =",company);
+    try {
+      setSearchObejct((prevValue)=>{
+        return {...prevValue,companyName:company,}
+      })
+      const {jobs} = await searchFilter({
+        jobType:searchObject.jobType,
+        location:searchObject.location,
+        companyName:company,
+        title:searchObject.title
+      })
+    if(!jobs){
+      setList([])
+    }
+    setList([...jobs])
+    } catch (error) {
+      console.log(error);
+    }
+   };
 
     return <>
     <div className="w-screen h-screen ">
@@ -128,23 +210,17 @@ function JobPortalDashBoard() {
           </div>
           <div className="border-b p-4 h-40">
             <span className="uppercase font-semibold text-xs">LOCATION</span>
-            <ul className="pl-2 py-4 flex-col">
-                <li className="flex gap-2 items-center mb-2" >
-                <input id="link-checkbox" type="checkbox" value="" className=" before:content[''] relative h-3 w-3 cursor-pointer appearance-none rounded-sm border border-blue-gray-200 transition-all before:absolute before:top-2/4 before:left-2/4 before:block before:h-6 before:w-6 before:-translate-y-2/4 before:-translate-x-2/4 before:rounded-full before:bg-blue-gray-500 before:opacity-0 before:transition-opacity checked:border-blue-500 checked:bg-blue-500 checked:before:bg-blue-500 hover:before:opacity-10"/>
-                  <p className="font-semibold text-xs">BENGALURU</p>
+            <ul className="pl-2 py-4 flex-col overflow-y-scroll ScrollBar">
+                {loc.length > 0 ? (
+                  loc.map((location) => (
+                    <li className="flex gap-2 items-center mb-2" >
+                    <input id="link-checkbox" type="checkbox"  checked={locCheckedCheckbox === location} onChange={() => handleLocCheckbox(location)} value="" className=" before:content[''] relative h-3 w-3 cursor-pointer appearance-none rounded-sm border border-blue-gray-200 transition-all before:absolute before:top-2/4 before:left-2/4 before:block before:h-6 before:w-6 before:-translate-y-2/4 before:-translate-x-2/4 before:rounded-full before:bg-blue-gray-500 before:opacity-0 before:transition-opacity checked:border-blue-500 checked:bg-blue-500 checked:before:bg-blue-500 hover:before:opacity-10"/>
+                    <p className="font-semibold text-xs">{location}</p>
                 </li>
-                <li className="flex gap-2 items-center mb-2" >
-                <input id="link-checkbox" type="checkbox" value="" className=" before:content[''] relative h-3 w-3 cursor-pointer appearance-none rounded-sm border border-blue-gray-200 transition-all before:absolute before:top-2/4 before:left-2/4 before:block before:h-6 before:w-6 before:-translate-y-2/4 before:-translate-x-2/4 before:rounded-full before:bg-blue-gray-500 before:opacity-0 before:transition-opacity checked:border-blue-500 checked:bg-blue-500 checked:before:bg-blue-500 hover:before:opacity-10"/>
-                  <p className="font-semibold text-xs">MUMBAI</p>
-                </li>
-                <li className="flex gap-2 items-center mb-2" >
-                <input id="link-checkbox" type="checkbox" value="" className=" before:content[''] relative h-3 w-3 cursor-pointer appearance-none rounded-sm border border-blue-gray-200 transition-all before:absolute before:top-2/4 before:left-2/4 before:block before:h-6 before:w-6 before:-translate-y-2/4 before:-translate-x-2/4 before:rounded-full before:bg-blue-gray-500 before:opacity-0 before:transition-opacity checked:border-blue-500 checked:bg-blue-500 checked:before:bg-blue-500 hover:before:opacity-10"/>
-                  <p className="font-semibold text-xs">DELHI</p>
-                </li>
-                <li className="flex gap-2 items-center mb-2" >
-                <input id="link-checkbox" type="checkbox" value="" className=" before:content[''] relative h-3 w-3 cursor-pointer appearance-none rounded-sm border border-blue-gray-200 transition-all before:absolute before:top-2/4 before:left-2/4 before:block before:h-6 before:w-6 before:-translate-y-2/4 before:-translate-x-2/4 before:rounded-full before:bg-blue-gray-500 before:opacity-0 before:transition-opacity checked:border-blue-500 checked:bg-blue-500 checked:before:bg-blue-500 hover:before:opacity-10"/>
-                  <p className="font-semibold text-xs">CHENNAI</p>
-                </li>
+                ))
+              ) : (
+              <p className="text-xs">No jobs found</p>
+              )}
             </ul>
           </div>
           <div className="border-b p-4 h-40">
@@ -171,22 +247,16 @@ function JobPortalDashBoard() {
           <div className="border-b p-4 h-40">
             <span className="uppercase font-semibold text-xs">COMPANY</span>
             <ul className="pl-2 py-4 flex-col">
-                <li className="flex gap-2 items-center mb-2" >
-                <input id="link-checkbox" type="checkbox" value="" className=" before:content[''] relative h-3 w-3 cursor-pointer appearance-none rounded-sm border border-blue-gray-200 transition-all before:absolute before:top-2/4 before:left-2/4 before:block before:h-6 before:w-6 before:-translate-y-2/4 before:-translate-x-2/4 before:rounded-full before:bg-blue-gray-500 before:opacity-0 before:transition-opacity checked:border-blue-500 checked:bg-blue-500 checked:before:bg-blue-500 hover:before:opacity-10"/>
-                  <p className="font-semibold text-xs">YOUTUBE</p>
+            {cmp.length > 0 ? (
+                  cmp.map((company) => (
+                    <li className="flex gap-2 items-center mb-2" >
+                    <input id="link-checkbox" checked={cmpCheckedCheckbox === company} onChange={() => handleCmpCheckbox(company)} type="checkbox" value="" className=" before:content[''] relative h-3 w-3 cursor-pointer appearance-none rounded-sm border border-blue-gray-200 transition-all before:absolute before:top-2/4 before:left-2/4 before:block before:h-6 before:w-6 before:-translate-y-2/4 before:-translate-x-2/4 before:rounded-full before:bg-blue-gray-500 before:opacity-0 before:transition-opacity checked:border-blue-500 checked:bg-blue-500 checked:before:bg-blue-500 hover:before:opacity-10"/>
+                    <p className="font-semibold text-xs">{company}</p>
                 </li>
-                <li className="flex gap-2 items-center mb-2" >
-                <input id="link-checkbox" type="checkbox" value="" className=" before:content[''] relative h-3 w-3 cursor-pointer appearance-none rounded-sm border border-blue-gray-200 transition-all before:absolute before:top-2/4 before:left-2/4 before:block before:h-6 before:w-6 before:-translate-y-2/4 before:-translate-x-2/4 before:rounded-full before:bg-blue-gray-500 before:opacity-0 before:transition-opacity checked:border-blue-500 checked:bg-blue-500 checked:before:bg-blue-500 hover:before:opacity-10"/>
-                  <p className="font-semibold text-xs">AMAZON</p>
-                </li>
-                <li className="flex gap-2 items-center mb-2" >
-                <input id="link-checkbox" type="checkbox" value="" className=" before:content[''] relative h-3 w-3 cursor-pointer appearance-none rounded-sm border border-blue-gray-200 transition-all before:absolute before:top-2/4 before:left-2/4 before:block before:h-6 before:w-6 before:-translate-y-2/4 before:-translate-x-2/4 before:rounded-full before:bg-blue-gray-500 before:opacity-0 before:transition-opacity checked:border-blue-500 checked:bg-blue-500 checked:before:bg-blue-500 hover:before:opacity-10"/>
-                  <p className="font-semibold text-xs">GOOGLE</p>
-                </li>
-                <li className="flex gap-2 items-center mb-2" >
-                <input id="link-checkbox" type="checkbox" value="" className=" before:content[''] relative h-3 w-3 cursor-pointer appearance-none rounded-sm border border-blue-gray-200 transition-all before:absolute before:top-2/4 before:left-2/4 before:block before:h-6 before:w-6 before:-translate-y-2/4 before:-translate-x-2/4 before:rounded-full before:bg-blue-gray-500 before:opacity-0 before:transition-opacity checked:border-blue-500 checked:bg-blue-500 checked:before:bg-blue-500 hover:before:opacity-10"/>
-                  <p className="font-semibold text-xs">FACEBOOK</p>
-                </li>
+                ))
+              ) : (
+              <p className="text-xs">No jobs found</p>
+              )}
             </ul>
           </div>
         </div>
@@ -205,7 +275,7 @@ function JobPortalDashBoard() {
           </div>
 
           <div className="w-full h-[88%] flex">
-            <div className="w-[40%] h-full flex-col overflow-y-scroll p-4 cards pt-0">
+            <div className="w-[40%] h-full flex-col overflow-y-scroll p-4 ScrollBar pt-0">
               {list.length > 0 ? (
                 list.map((li) => (
                   <Card

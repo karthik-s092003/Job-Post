@@ -1,6 +1,6 @@
 function Details(props){
     return <>
-        <div className="w-[55%] h-full flex-col p-4 bg-white overflow-y-scroll cards">
+        <div className="w-[55%] h-full flex-col p-4 bg-white overflow-y-scroll ScrollBar">
         {
         props.selectedJob ? (
           <>

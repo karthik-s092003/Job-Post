@@ -86,5 +86,33 @@ const searchFilter = async(data)=>{
   }
 }
 
-export {company_LogIn,company_SignIn,get_all_jobs,get_company_details,searchFilter}
+const getAllLocations = async()=>{
+  const token = localStorage.getItem('token')
+  try {
+    const res = await axios.get(`${FETCHURI}/emp/loc`,{
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    })
+    return res.data
+  } catch (error) {
+    console.log(error); 
+  }
+}
+
+const getAllCmp = async()=>{
+  const token = localStorage.getItem('token')
+  try {
+    const res = await axios.get(`${FETCHURI}/emp/cmp`,{
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    })
+    return res.data
+  } catch (error) {
+    console.log(error); 
+  }
+}
+
+export {company_LogIn,company_SignIn,get_all_jobs,get_company_details,searchFilter,getAllLocations,getAllCmp}
   
