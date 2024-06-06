@@ -1,6 +1,7 @@
 import { useState } from "react";
 import {useNavigate} from "react-router-dom";
 import { emp_signIn } from "./services/Api";
+import { FaSpinner } from 'react-icons/fa';
 function EmpSignIn(){
     const [data, setData] = useState({
         Email: '',
@@ -8,6 +9,7 @@ function EmpSignIn(){
       });
       const [disp,setDisp] = useState({display:"none"})
       const [msg,setMsg] = useState("")
+      const [isloading,setIsloading] = useState(false)
       const navigate = useNavigate();
       function email(event){
    
@@ -26,7 +28,9 @@ function EmpSignIn(){
 
       const submit =async ()=>{
         console.log(data);
-       const res =await emp_signIn(data);
+        try {
+          setIsloading(true)
+          const res =await emp_signIn(data);
        console.log(res);
        if(res==="successfull"){
         navigate("/job-portal")
@@ -34,6 +38,12 @@ function EmpSignIn(){
        else{
         setMsg(res);
         setDisp({display:"flex"})
+       }
+        } catch (error) {
+          console.log(error);
+        }
+       finally{
+        setIsloading(false)
        }
       }
       function signIn(){
@@ -70,7 +80,7 @@ function EmpSignIn(){
         <span>{msg}</span>
       </div>
       <div className="submit">
-          <button className="btn" onClick={submit}>Sign In</button>
+          <button className="btn flex justify-center items-center" onClick={submit}>{isloading?<FaSpinner className="animate-spin text-white" size={20} />:<p>Sign In</p>}</button>
       </div>
     </div>
     </div>
