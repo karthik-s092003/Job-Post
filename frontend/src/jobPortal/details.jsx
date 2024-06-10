@@ -1,6 +1,6 @@
 function Details(props){
     return <>
-        <div className="w-[55%] h-full flex-col p-4 bg-white overflow-y-scroll ScrollBar">
+        <div className="w-full h-[98%] rounded-sm flex-col p-4 bg-white overflow-y-scroll ScrollBar shadow">
         {
         props.selectedJob ? (
           <>
@@ -31,10 +31,13 @@ function Details(props){
 
             <div>
               <h1 className="font-bold mb-4">Job Description:</h1>
-              <p className="mb-4">{props.selectedJob.jobDescription}</p>
+              <p className="mb-4 text-sm">{props.selectedJob.jobDescription}</p>
 
               <h1 className="font-bold mb-4">Location:</h1>
-              <p className="mb-4">{props.selectedJob.location}</p>
+              <p className="mb-4 text-sm">{props.selectedJob.location}</p>
+            </div>
+            <div className="w-full flex justify-center items-center">
+              {props.apply && <button type="button" class="text-white bg-blue-200 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-3xl mt-3  text-sm px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">Apply Now</button>}    
             </div>
           </>
         ) : (

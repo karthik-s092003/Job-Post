@@ -6,9 +6,8 @@ import "./jobPortal.css"
 import Details from "./details";
 import { get_all_jobs } from "./services/jobportal";
 import { useEffect, useState } from "react"
-import { get_company_details,getAllLocations,getAllCmp } from "./services/jobportal";
+import { get_company_details,getAllLocations,getAllCmp,get_empName } from "./services/jobportal";
 import { searchFilter } from "./services/jobportal";
-
 
 function JobPortalDashBoard() {
     const [list,setList] = useState([])
@@ -28,8 +27,11 @@ function JobPortalDashBoard() {
       jobType:"",
       location:"",
       companyName:"",
-      title:""
+      title:"",
+      salary:0,
     })
+    const [salary,setSalary] = useState(0);
+    const [empDetails,setEmpDetails] = useState({Name: 'Log In', Email: ''})
 
     const handleCardClick = async (job) => {
       setSelectedJob(job);
@@ -47,6 +49,8 @@ function JobPortalDashBoard() {
               const res = await get_all_jobs()
               const companies = await getAllCmp()
               const locations = await getAllLocations()
+              const emp = await get_empName()
+              setEmpDetails(emp)
               setCpm([...companies])
               setLoc([...locations])
               setList([...res])
@@ -71,7 +75,8 @@ function JobPortalDashBoard() {
           jobType:searchObject.jobType,
           location:searchObject.location,
           companyName:searchObject.companyName,
-          title:e.target.value
+          title:e.target.value,
+          salary:searchObject.salary
         })
       if(!jobs){
         setList([])
@@ -97,7 +102,8 @@ function JobPortalDashBoard() {
           jobType:value,
           location:searchObject.location,
           companyName:searchObject.companyName,
-          title:searchObject.title
+          title:searchObject.title,
+          salary:searchObject.salary
         })
       if(!jobs){
         setList([])
@@ -118,6 +124,7 @@ function JobPortalDashBoard() {
         partTime: false,
         internship: false,
         contract:false,
+        
       })
       setCmpCheckedCheckbox(null)
       setLocCheckedCheckbox(null)
@@ -125,7 +132,8 @@ function JobPortalDashBoard() {
         jobType:"",
         location:"",
         companyName:"",
-        title:""
+        title:"",
+        salary:0
       })
       try {
         const res = await get_all_jobs()
@@ -145,7 +153,8 @@ function JobPortalDashBoard() {
           jobType:searchObject.jobType,
           location:loc,
           companyName:searchObject.companyName,
-          title:searchObject.title
+          title:searchObject.title,
+          salary:searchObject.salary
         })
       if(!jobs){
         setList([])
@@ -167,7 +176,8 @@ function JobPortalDashBoard() {
         jobType:searchObject.jobType,
         location:searchObject.location,
         companyName:company,
-        title:searchObject.title
+        title:searchObject.title,
+        salary:searchObject.salary
       })
     if(!jobs){
       setList([])
@@ -177,10 +187,28 @@ function JobPortalDashBoard() {
       console.log(error);
     }
    };
+   const handleSalaryFilter = async (e)=>{
+      setSalary(e.target.value);
+      try {
+        const {jobs} = await searchFilter({
+          jobType:searchObject.jobType,
+          location:searchObject.location,
+          companyName:searchObject.companyName,
+          title:searchObject.title,
+          salary:e.target.value
+        })
+        if(!jobs){
+          setList([])
+        }
+        setList([...jobs])
+      } catch (error) {
+        console.log(error);
+      }
+   }
 
     return <>
     <div className="w-screen h-screen ">
-        <NavBar/>
+        <NavBar emp={empDetails}/>
         <div className="w-full h-[90%] flex">
             <div className="w-[20%] h-full overflow-y-scroll bg-white">
           <div className="border-b p-4 h-16 flex items-center gap-24">
@@ -223,26 +251,10 @@ function JobPortalDashBoard() {
               )}
             </ul>
           </div>
-          <div className="border-b p-4 h-40">
-            <span className="uppercase font-semibold text-xs">SALARY RANGE</span>
-            <ul className="pl-2 py-4 flex-col">
-                <li className="flex gap-2 items-center mb-2" >
-                <input id="link-checkbox" type="checkbox" value="" className=" before:content[''] relative h-3 w-3 cursor-pointer appearance-none rounded-sm border border-blue-gray-200 transition-all before:absolute before:top-2/4 before:left-2/4 before:block before:h-6 before:w-6 before:-translate-y-2/4 before:-translate-x-2/4 before:rounded-full before:bg-blue-gray-500 before:opacity-0 before:transition-opacity checked:border-blue-500 checked:bg-blue-500 checked:before:bg-blue-500 hover:before:opacity-10"/>
-                  <p className="font-semibold text-xs">Rs.0 To Rs.10LPA</p>
-                </li>
-                <li className="flex gap-2 items-center mb-2" >
-                <input id="link-checkbox" type="checkbox" value="" className=" before:content[''] relative h-3 w-3 cursor-pointer appearance-none rounded-sm border border-blue-gray-200 transition-all before:absolute before:top-2/4 before:left-2/4 before:block before:h-6 before:w-6 before:-translate-y-2/4 before:-translate-x-2/4 before:rounded-full before:bg-blue-gray-500 before:opacity-0 before:transition-opacity checked:border-blue-500 checked:bg-blue-500 checked:before:bg-blue-500 hover:before:opacity-10"/>
-                  <p className="font-semibold text-xs">Rs.10LPA To Rs.20LPA</p>
-                </li>
-                <li className="flex gap-2 items-center mb-2" >
-                <input id="link-checkbox" type="checkbox" value="" className=" before:content[''] relative h-3 w-3 cursor-pointer appearance-none rounded-sm border border-blue-gray-200 transition-all before:absolute before:top-2/4 before:left-2/4 before:block before:h-6 before:w-6 before:-translate-y-2/4 before:-translate-x-2/4 before:rounded-full before:bg-blue-gray-500 before:opacity-0 before:transition-opacity checked:border-blue-500 checked:bg-blue-500 checked:before:bg-blue-500 hover:before:opacity-10"/>
-                  <p className="font-semibold text-xs">Rs.20LPA To Rs.30PLA</p>
-                </li>
-                <li className="flex gap-2 items-center mb-2" >
-                <input id="link-checkbox" type="checkbox" value="" className=" before:content[''] relative h-3 w-3 cursor-pointer appearance-none rounded-sm border border-blue-gray-200 transition-all before:absolute before:top-2/4 before:left-2/4 before:block before:h-6 before:w-6 before:-translate-y-2/4 before:-translate-x-2/4 before:rounded-full before:bg-blue-gray-500 before:opacity-0 before:transition-opacity checked:border-blue-500 checked:bg-blue-500 checked:before:bg-blue-500 hover:before:opacity-10"/>
-                  <p className="font-semibold text-xs">Rs.30LPA To Rs.40LPA</p>
-                </li>
-            </ul>
+          <div className="border-b p-4 h-40"> 
+            <span className="uppercase font-semibold text-xs">Salary: </span>
+            <span className="font-semibold text-xs">{salary} INR and above</span>
+            <input type="range" max="300000" min="0" step="10000" value={salary} onChange={handleSalaryFilter} class="w-full h-2 bg-gray-300 rounded outline-none appearance-none mt-10"/>
           </div>
           <div className="border-b p-4 h-40">
             <span className="uppercase font-semibold text-xs">COMPANY</span>
@@ -289,7 +301,9 @@ function JobPortalDashBoard() {
               <p>No jobs found</p>
               )}
             </div>
-            <Details selectedJob={selectedJob} companyDetails={companyDetails} />
+            <div className="w-[55%] h-full">
+             <Details selectedJob={selectedJob} companyDetails={companyDetails} apply={true}/>
+            </div>
           </div> 
 
 

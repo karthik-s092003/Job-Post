@@ -17,7 +17,7 @@ function Card(props){
           decode()
       },[id])
     return <>
-        <div className={`bg-white p-6 flex-col mb-4 cursor-pointer rounded-md ${props.isSelected ? 'border-blue-500 border-2' : 'border-gray-300'}`} onClick={props.onClick}>
+        <div className={`bg-white p-6 flex-col mb-4 cursor-pointer rounded-md ${props.isSelected ? 'border-blue-500 border-2' : 'border-gray-300 shadow'}`} onClick={props.onClick}>
             <div className="flex gap-4 items-center">
                 <img src={companyDetails.companyLogo} alt="" className="w-10 h-10"/>
                 <div className="flex-col gap-0">
@@ -32,7 +32,7 @@ function Card(props){
 
             <div className="flex gap-3 mt-4">
                 <span className="text-sm bg-blue-100 text-blue-600 w-24 h-8 rounded-2xl flex justify-center items-center">{props.job.jobType}</span>
-                <span className="text-sm bg-blue-100 text-blue-600 w-24 h-8 rounded-2xl flex justify-center items-center">{props.job.salary}LPA</span>
+                <span className="text-sm bg-blue-100 text-blue-600 w-24 h-8 rounded-2xl flex justify-center items-center">{props.job.salary}INR</span>
                 <span className="text-sm bg-blue-100 text-blue-600 w-24 h-8 rounded-2xl flex justify-center items-center">{props.job.workspaceType}</span>
             </div>
 

@@ -8,3 +8,20 @@
     align-items: center;
     flex-direction: column;
 }
+
+input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 20px;
+  height: 20px;
+  background: blue;
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+input[type="range"]::-moz-range-thumb {
+  width: 15px;
+  height: 15px;
+  background: black;
+  border-radius: 50%;
+  cursor: pointer;
+}

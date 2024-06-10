@@ -28,7 +28,7 @@ function CompanySignIn(){
        const res =await company_signIn(data);
        console.log(res);
        if(res==="successfull"){
-        navigate("/company")
+        navigate("/job-post")
        }
        else{
         setMsg(res);

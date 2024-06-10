@@ -114,5 +114,20 @@ const getAllCmp = async()=>{
   }
 }
 
-export {company_LogIn,company_SignIn,get_all_jobs,get_company_details,searchFilter,getAllLocations,getAllCmp}
+const get_empName = async ()=>{
+  const token = localStorage.getItem('token')
+  try {
+    const res = await axios.get(`${FETCHURI}/emp/decode`,{
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  })
+  console.log(res.data);
+  return res.data;
+  } catch (error) {
+      return ({Name:"Log In",Email:""})
+  }
+}
+
+export {company_LogIn,company_SignIn,get_all_jobs,get_company_details,searchFilter,getAllLocations,getAllCmp,get_empName}
   

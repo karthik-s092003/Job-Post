@@ -42,7 +42,7 @@ function Login(){
   const handleSubmit =async ()=>{
    const res = await company_Signup(data);
    if(res === "successfull"){
-    navigate("/company");
+    navigate("/job-post");
   }
   else{
     setMsg(res)

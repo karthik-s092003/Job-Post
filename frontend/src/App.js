@@ -10,6 +10,7 @@ import EmpSignIn from "./components/empSignIn";
 import AppliedJobsList from "./components/appliedJobsList";
 import Applications from "./components/JobApplicatons";
 import JobPortalDashBoard from "./jobPortal/home";
+import Dashboard from "./jobPost/dashboard";
 
 function App() {
   return (
@@ -17,7 +18,7 @@ function App() {
       <Routes>
         <Route path="/" element={<Home/>} />
         <Route path="/company/signin" element={<SignIn />} />
-        <Route path="/company/*" element={<CompanyPage/>}/>
+        <Route path="/company/*" element={<CompanyPage  />}/>
         <Route path="/company/signup" element={<Login />} />
         <Route path="/emp/signup" element={<EmpLogin/>}/>
         <Route path="/emp/*" element={<EmpPage/>}/>
@@ -25,6 +26,7 @@ function App() {
         <Route path="/emp/appliedjobs" element={<AppliedJobsList/>}/>
         <Route path="/company/applications" element={<Applications/>}/>
         <Route path="/job-portal" element={<JobPortalDashBoard/>}></Route>
+        <Route path="/job-post" element={<Dashboard/>}></Route>
       </Routes>
     </Router>
   );
