@@ -58,7 +58,8 @@ const register = async (req,res)=>{
 const decodeToken = async (req,res)=>{
     try {
         const {Cmp} = req.user;
-        res.status(200).json({cpm:Cmp,email:req.user.Email})
+        const company = await Company.find({companyName:Cmp})
+        res.status(200).json({cpm:Cmp,email:req.user.Email,id:company[0]._id})
     } catch (error) {
         res.status(400).json({msg:"something went wrong"})
     }

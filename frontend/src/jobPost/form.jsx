@@ -1,10 +1,21 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
 import Navbar from './navbar';
+import { get_cmpName } from './services/jobPost';
 
 const Form = () => {
   const [jobDescription, setJobDescription] = useState('');
+  const [companyName,setCompanyName] = useState('');
+  const [applicationEmail,setapplicationEmail] = useState('');
+  const [title,setTitle] = useState('');
+  const [jobType,setjobtype] = useState('');
+  const [workspaceType,setWorkSpace] = useState('');
+  const [location,setLocation] = useState('');
+  const [salary,setSalary] = useState('');
+  const [data,setdata] = useState({});
+  const [companyId,setcompanyId] = useState();
+
 
   const handleChange = (value) => {
     setJobDescription(value);
@@ -26,6 +37,37 @@ const Form = () => {
     }
   };
 
+  const handleSubmit = ()=>{
+    setdata({
+      title:title,
+      jobDescription:jobDescription,
+      companyName:companyName,
+      location:location,
+      salary:salary,
+      applicationEmail:applicationEmail,
+      skills:skills,
+      workspaceType:workspaceType,
+      jobType:jobType,
+      companyId:companyId
+    })
+  }
+
+  useEffect(()=>{
+    const decode = async ()=>{
+      try {
+          const {id} = await get_cmpName();
+          setcompanyId(id)
+      } catch (error) {
+          console.error("Error fetching data", error);
+      }
+  }
+    decode()
+  },[])
+
+  useEffect(()=>{
+    console.log("job post = ",data);
+  },[data])
+
   return (
     <div className='w-screen bg-slate-100'>
       <Navbar cmp={{ cpm: "hello" }} />
@@ -35,11 +77,11 @@ const Form = () => {
         <div className='flex flex-wrap gap-10 w-full mb-6'>
           <div className='flex flex-col gap-1 w-full md:w-[48%]'>
             <p className='text-sm font-bold'>Company name:</p>
-            <input type="text" id="company_name" className="bg-gray-50 border text-sm rounded-lg block w-full p-2.5 dark:placeholder-gray-400 dark:text-white" placeholder="Name of your company" required />
+            <input onChange={(event) => setCompanyName(event.target.value)} type="text" id="company_name" className="bg-gray-50 border text-sm rounded-lg block w-full p-2.5 dark:placeholder-gray-400 " placeholder="Name of your company" required />
           </div>
           <div className='flex flex-col gap-1 w-full md:w-[48%]'>
             <p className='text-sm font-bold'>Email:</p>
-            <input type="text" id="email" className="bg-gray-50 border text-sm rounded-lg block w-full p-2.5 dark:placeholder-gray-400 dark:text-white" placeholder="Company email" required />
+            <input onChange={(event) => setapplicationEmail(event.target.value)} type="text" id="email" className="bg-gray-50 border text-sm rounded-lg block w-full p-2.5 dark:placeholder-gray-400" placeholder="Company email" required />
           </div>
         </div>
         <hr />
@@ -49,7 +91,7 @@ const Form = () => {
         <p className='text-sm text-gray-500 mb-4'>Describe the role and responsibilities of the position</p>
         <div className='mb-4'>
           <p className='text-sm font-bold'>Job Title:</p>
-          <input type="text" id="job_title" className="bg-gray-50 border text-sm rounded-lg block w-[99%] p-2.5 dark:placeholder-gray-400 dark:text-white" placeholder="e.g. Software Engineer" required />
+          <input onChange={(event) => setTitle(event.target.value)} type="text" id="job_title" className="bg-gray-50 border text-sm rounded-lg block w-[99%] p-2.5 dark:placeholder-gray-400 " placeholder="e.g. Software Engineer" required />
         </div>
         <div className='mb-4'>
           <p className='text-sm font-bold'>Skills:</p>
@@ -70,7 +112,7 @@ const Form = () => {
         <div className='flex flex-wrap gap-10 w-full mb-6'>
           <div className='flex flex-col gap-1 w-full md:w-[48%]'>
             <p className='text-sm font-bold'>Job type:</p>
-            <select id="job_type" className="bg-gray-50 border text-sm rounded-lg block w-full p-2.5 dark:placeholder-gray-400 text-slate-400">
+            <select onChange={(event) => setjobtype(event.target.value)} id="job_type" className="bg-gray-50 border text-sm rounded-lg block w-full p-2.5 dark:placeholder-gray-400 text-slate-400">
               <option>Full-time</option>
               <option>Part-time</option>
               <option>Internship</option>
@@ -79,7 +121,7 @@ const Form = () => {
           </div>
           <div className='flex flex-col gap-1 w-full md:w-[48%]'>
             <p className='text-sm font-bold'>Work space type:</p>
-            <select id="workspace_type" className="bg-gray-50 border text-sm rounded-lg block w-full p-2.5 dark:placeholder-gray-400 text-slate-400">
+            <select onChange={(event) => setWorkSpace(event.target.value)} id="workspace_type" className="bg-gray-50 border text-sm rounded-lg block w-full p-2.5 dark:placeholder-gray-400 text-slate-400">
               <option>Remote</option>
               <option>Hybrid</option>
               <option>On-site</option>
@@ -89,11 +131,11 @@ const Form = () => {
         <div className='flex flex-wrap gap-10 w-full mb-6'>
           <div className='flex flex-col gap-1 w-full md:w-[48%]'>
             <p className='text-sm font-bold'>Location:</p>
-            <input type="text" id="location" className="bg-gray-50 border text-sm rounded-lg block w-full p-2.5 dark:placeholder-gray-400 dark:text-white" placeholder="Company location" required />
+            <input onChange={(event) => setLocation(event.target.value)} type="text" id="location" className="bg-gray-50 border text-sm rounded-lg block w-full p-2.5 dark:placeholder-gray-400 " placeholder="Company location" required />
           </div>
           <div className='flex flex-col gap-1 w-full md:w-[48%]'>
             <p className='text-sm font-bold'>Salary:</p>
-            <input type="number" id="salary" className="bg-gray-50 border text-sm rounded-lg block w-full p-2.5 dark:placeholder-gray-400 dark:text-white" placeholder="Salary, e.g. 90000" required />
+            <input onChange={(event) => setSalary(event.target.value)} type="number" id="salary" className="bg-gray-50 border text-sm rounded-lg block w-full p-2.5 dark:placeholder-gray-400" placeholder="Salary, e.g. 90000" required />
           </div>
         </div>
         <div className="w-full">
@@ -108,7 +150,7 @@ const Form = () => {
           />
         </div>
         <div className='w-full mt-3 flex justify-center items-center'>
-          <button type="button" class="py-2.5 px-5 me-2 mb-2 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700">Post Job</button>
+          <button onClick={handleSubmit} type="button" class="py-2.5 px-5 me-2 mb-2 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700">Post Job</button>
         </div>
       </div>
     </div>
