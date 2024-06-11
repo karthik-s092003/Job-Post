@@ -11,6 +11,7 @@ import AppliedJobsList from "./components/appliedJobsList";
 import Applications from "./components/JobApplicatons";
 import JobPortalDashBoard from "./jobPortal/home";
 import Dashboard from "./jobPost/dashboard";
+import Form from "./jobPost/form";
 
 function App() {
   return (
@@ -27,6 +28,7 @@ function App() {
         <Route path="/company/applications" element={<Applications/>}/>
         <Route path="/job-portal" element={<JobPortalDashBoard/>}></Route>
         <Route path="/job-post" element={<Dashboard/>}></Route>
+        <Route path="/job-post/form" element={<Form/>}></Route>
       </Routes>
     </Router>
   );

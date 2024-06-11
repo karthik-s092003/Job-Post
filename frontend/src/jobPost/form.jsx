@@ -1,29 +1,121 @@
 import React, { useState } from 'react';
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
+import Navbar from './navbar';
 
-const JobDescriptionEditor = () => {
+const Form = () => {
   const [jobDescription, setJobDescription] = useState('');
 
   const handleChange = (value) => {
     setJobDescription(value);
   };
 
+  const [skill, setSkill] = useState('');
+  const [skills, setSkills] = useState([]);
+
+  const handleInputChange = (e) => {
+    setSkill(e.target.value);
+  };
+
+  const handleKeyDown = (e) => {
+    if (e.key === 'Enter') {
+      if (skill && !skills.includes(skill)) {
+        setSkills([...skills, skill]);
+        setSkill('');
+      }
+    }
+  };
+
   return (
-    <div className="container mx-auto p-4">
-      <h2 className="text-2xl mb-4">Job Description</h2>
-      <ReactQuill
-        value={jobDescription}
-        onChange={handleChange}
-        modules={JobDescriptionEditor.modules}
-        formats={JobDescriptionEditor.formats}
-        placeholder="Write the job description here..."
-      />
+    <div className='w-screen bg-slate-100'>
+      <Navbar cmp={{ cpm: "hello" }} />
+      <div className='w-full mt-2 flex flex-col p-4'>
+        <h1 className='font-bold text-lg mb-1'>Company Details</h1>
+        <p className='text-sm text-gray-500 mb-4'>Tell us more about your company, your logo and other details will be automatically added</p>
+        <div className='flex flex-wrap gap-10 w-full mb-6'>
+          <div className='flex flex-col gap-1 w-full md:w-[48%]'>
+            <p className='text-sm font-bold'>Company name:</p>
+            <input type="text" id="company_name" className="bg-gray-50 border text-sm rounded-lg block w-full p-2.5 dark:placeholder-gray-400 dark:text-white" placeholder="Name of your company" required />
+          </div>
+          <div className='flex flex-col gap-1 w-full md:w-[48%]'>
+            <p className='text-sm font-bold'>Email:</p>
+            <input type="text" id="email" className="bg-gray-50 border text-sm rounded-lg block w-full p-2.5 dark:placeholder-gray-400 dark:text-white" placeholder="Company email" required />
+          </div>
+        </div>
+        <hr />
+      </div>
+      <div className='w-full flex flex-col p-4 py-2'>
+        <h1 className='font-bold text-lg mb-1'>Job Details</h1>
+        <p className='text-sm text-gray-500 mb-4'>Describe the role and responsibilities of the position</p>
+        <div className='mb-4'>
+          <p className='text-sm font-bold'>Job Title:</p>
+          <input type="text" id="job_title" className="bg-gray-50 border text-sm rounded-lg block w-[99%] p-2.5 dark:placeholder-gray-400 dark:text-white" placeholder="e.g. Software Engineer" required />
+        </div>
+        <div className='mb-4'>
+          <p className='text-sm font-bold'>Skills:</p>
+          <input
+            type="text"
+            value={skill}
+            onChange={handleInputChange}
+            onKeyDown={handleKeyDown}
+            placeholder="Enter a skill and press Enter"
+            className="bg-gray-50 border text-sm rounded-lg block  p-2.5 dark:placeholder-gray-400 mb-2 w-[99%]"
+          />
+          <ul className='flex flex-wrap gap-2'>
+            {skills.map((skill, index) => (
+              <li key={index} className='text-white bg-slate-700 font-medium rounded-full text-sm px-5 py-2.5 text-center'>{skill}</li>
+            ))}
+          </ul>
+        </div>
+        <div className='flex flex-wrap gap-10 w-full mb-6'>
+          <div className='flex flex-col gap-1 w-full md:w-[48%]'>
+            <p className='text-sm font-bold'>Job type:</p>
+            <select id="job_type" className="bg-gray-50 border text-sm rounded-lg block w-full p-2.5 dark:placeholder-gray-400 text-slate-400">
+              <option>Full-time</option>
+              <option>Part-time</option>
+              <option>Internship</option>
+              <option>Contract</option>
+            </select>
+          </div>
+          <div className='flex flex-col gap-1 w-full md:w-[48%]'>
+            <p className='text-sm font-bold'>Work space type:</p>
+            <select id="workspace_type" className="bg-gray-50 border text-sm rounded-lg block w-full p-2.5 dark:placeholder-gray-400 text-slate-400">
+              <option>Remote</option>
+              <option>Hybrid</option>
+              <option>On-site</option>
+            </select>
+          </div>
+        </div>
+        <div className='flex flex-wrap gap-10 w-full mb-6'>
+          <div className='flex flex-col gap-1 w-full md:w-[48%]'>
+            <p className='text-sm font-bold'>Location:</p>
+            <input type="text" id="location" className="bg-gray-50 border text-sm rounded-lg block w-full p-2.5 dark:placeholder-gray-400 dark:text-white" placeholder="Company location" required />
+          </div>
+          <div className='flex flex-col gap-1 w-full md:w-[48%]'>
+            <p className='text-sm font-bold'>Salary:</p>
+            <input type="number" id="salary" className="bg-gray-50 border text-sm rounded-lg block w-full p-2.5 dark:placeholder-gray-400 dark:text-white" placeholder="Salary, e.g. 90000" required />
+          </div>
+        </div>
+        <div className="w-full">
+          <p className="text-sm font-bold">Job Description:</p>
+          <ReactQuill
+            value={jobDescription}
+            onChange={handleChange}
+            modules={Form.modules}
+            formats={Form.formats}
+            placeholder="Write the job description here..."
+            className='bg-slate-50 rounded w-[99%]'
+          />
+        </div>
+        <div className='w-full mt-3 flex justify-center items-center'>
+          <button type="button" class="py-2.5 px-5 me-2 mb-2 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700">Post Job</button>
+        </div>
+      </div>
     </div>
   );
 };
 
-JobDescriptionEditor.modules = {
+Form.modules = {
   toolbar: [
     [{ 'header': '1'}, { 'header': '2'}, { 'font': [] }],
     [{ 'list': 'ordered'}, { 'list': 'bullet' }],
@@ -34,10 +126,10 @@ JobDescriptionEditor.modules = {
   ]
 };
 
-JobDescriptionEditor.formats = [
+Form.formats = [
   'header', 'font', 'list', 'bullet',
   'bold', 'italic', 'underline', 'strike', 'blockquote',
   'align', 'color', 'background'
 ];
 
-export default JobDescriptionEditor;
+export default Form;
