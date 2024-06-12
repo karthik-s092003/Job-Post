@@ -25,3 +25,22 @@ input[type="range"]::-moz-range-thumb {
   border-radius: 50%;
   cursor: pointer;
 }
+
+
+.job-description ul,
+.job-description ol {
+  padding-left: 20px; /* Adjust padding as needed */
+  list-style: inside; /* Adjust list style as needed */
+}
+
+.job-description ul {
+  list-style-type: disc;
+}
+
+.job-description ol {
+  list-style-type: decimal;
+}
+
+.job-description li {
+  margin-bottom: 5px; /* Adjust margin as needed */
+}
