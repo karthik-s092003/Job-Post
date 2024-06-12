@@ -16,6 +16,12 @@ function Card(props){
         }
           decode()
       },[id])
+      const limitWords = (text, wordLimit) => {
+        const words = text.split(' ');
+        return words.slice(0, wordLimit).join(' ') + (words.length > wordLimit ? '...' : '');
+    };
+    
+    const limitedDescription = limitWords(props.job.jobDescription, 15);
     return <>
         <div className={`bg-white p-6 flex-col mb-4 cursor-pointer rounded-md ${props.isSelected ? 'border-blue-500 border-2' : 'border-gray-300 shadow'}`} onClick={props.onClick}>
             <div className="flex gap-4 items-center">
@@ -27,7 +33,7 @@ function Card(props){
             </div>
 
             <div className="mt-4">
-                <p className="text-sm">{props.job.jobDescription}</p>
+                <p className="text-sm" dangerouslySetInnerHTML={{ __html: limitedDescription }}></p>
             </div>
 
             <div className="flex gap-3 mt-4">

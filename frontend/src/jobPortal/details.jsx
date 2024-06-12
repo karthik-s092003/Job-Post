@@ -31,7 +31,7 @@ function Details(props){
 
             <div>
               <h1 className="font-bold mb-4">Job Description:</h1>
-              <p className="mb-4 text-sm">{props.selectedJob.jobDescription}</p>
+              <p className="mb-4 text-sm"  dangerouslySetInnerHTML={{ __html: props.selectedJob.jobDescription }}></p>
 
               <h1 className="font-bold mb-4">Location:</h1>
               <p className="mb-4 text-sm">{props.selectedJob.location}</p>

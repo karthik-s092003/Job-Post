@@ -3,19 +3,21 @@ import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
 import Navbar from './navbar';
 import { get_cmpName } from './services/jobPost';
+import { createJobPost } from './services/jobPost';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const Form = () => {
   const [jobDescription, setJobDescription] = useState('');
-  const [companyName,setCompanyName] = useState('');
-  const [applicationEmail,setapplicationEmail] = useState('');
-  const [title,setTitle] = useState('');
-  const [jobType,setjobtype] = useState('');
-  const [workspaceType,setWorkSpace] = useState('');
-  const [location,setLocation] = useState('');
-  const [salary,setSalary] = useState('');
-  const [data,setdata] = useState({});
-  const [companyId,setcompanyId] = useState();
-
+  const [companyName, setCompanyName] = useState('');
+  const [applicationEmail, setapplicationEmail] = useState('');
+  const [title, setTitle] = useState('');
+  const [jobType, setjobtype] = useState('');
+  const [workspaceType, setWorkSpace] = useState('');
+  const [location, setLocation] = useState('');
+  const [salary, setSalary] = useState('');
+  const [data, setdata] = useState({});
+  const [companyId, setcompanyId] = useState('');
 
   const handleChange = (value) => {
     setJobDescription(value);
@@ -37,40 +39,53 @@ const Form = () => {
     }
   };
 
-  const handleSubmit = ()=>{
-    setdata({
-      title:title,
-      jobDescription:jobDescription,
-      companyName:companyName,
-      location:location,
-      salary:salary,
-      applicationEmail:applicationEmail,
-      skills:skills,
-      workspaceType:workspaceType,
-      jobType:jobType,
-      companyId:companyId
-    })
-  }
+  const handleSubmit = async () => {
+    const postData = {
+      title: title,
+      jobDescription: jobDescription,
+      companyName: companyName,
+      location: location,
+      salary: salary,
+      applicationEmail: applicationEmail,
+      skills: skills,
+      workspaceType: workspaceType,
+      jobType: jobType,
+      companyId: companyId,
+      expiresAt: "2024-12-31T23:59:59.000Z",
+    };
 
-  useEffect(()=>{
-    const decode = async ()=>{
+    setdata(postData);
+
+    try {
+      const res = await createJobPost(postData);
+      console.log(res);
+      toast.success('Job posted successfully!');
+    } catch (error) {
+      console.log(error.message);
+      toast.error('Failed to post the job.');
+    }
+  };
+
+  useEffect(() => {
+    const decode = async () => {
       try {
-          const {id} = await get_cmpName();
-          setcompanyId(id)
+        const { id } = await get_cmpName();
+        setcompanyId(id);
       } catch (error) {
-          console.error("Error fetching data", error);
+        console.error("Error fetching data", error);
       }
-  }
-    decode()
-  },[])
+    }
+    decode();
+  }, []);
 
-  useEffect(()=>{
-    console.log("job post = ",data);
-  },[data])
+  useEffect(() => {
+    console.log("job post = ", data);
+  }, [data]);
 
   return (
     <div className='w-screen bg-slate-100'>
       <Navbar cmp={{ cpm: "hello" }} />
+      <ToastContainer />
       <div className='w-full mt-2 flex flex-col p-4'>
         <h1 className='font-bold text-lg mb-1'>Company Details</h1>
         <p className='text-sm text-gray-500 mb-4'>Tell us more about your company, your logo and other details will be automatically added</p>
@@ -150,7 +165,7 @@ const Form = () => {
           />
         </div>
         <div className='w-full mt-3 flex justify-center items-center'>
-          <button onClick={handleSubmit} type="button" class="py-2.5 px-5 me-2 mb-2 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700">Post Job</button>
+          <button onClick={handleSubmit} type="button" className="py-2.5 px-5 me-2 mb-2 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700">Post Job</button>
         </div>
       </div>
     </div>

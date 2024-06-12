@@ -34,4 +34,20 @@ const cmpJobOffers = async (data) => {
     }
   }
 
-export {cmpJobOffers,get_cmpName}
+  const createJobPost = async (data)=>{
+    const token = localStorage.getItem('token')
+    try {
+      const res = await axios.post(`${FETCHURI}/company/add`,data,{
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+      console.log(res);
+      return res.data.msg;
+    } catch (error) {
+      console.log(error);
+      return error.response.data.msg;
+    }
+  }
+
+export {cmpJobOffers,get_cmpName,createJobPost}
