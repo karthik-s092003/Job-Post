@@ -2,7 +2,7 @@ import { Routes, Route, BrowserRouter as Router } from "react-router-dom";
 import './App.css';
 import Login from "./components/companyLogin";
 import SignIn from "./components/companySignin";
-import Home from "./components/homePage";
+// import Home from "./components/homePage";
 import EmpLogin from "./components/employeeSignup";
 import CompanyPage from "./components/companyPage";
 import EmpPage from "./components/empPage";
@@ -12,12 +12,13 @@ import Applications from "./components/JobApplicatons";
 import JobPortalDashBoard from "./jobPortal/home";
 import Dashboard from "./jobPost/dashboard";
 import Form from "./jobPost/form";
+import HomePage from "./homeAndLogin/homePage";
 
 function App() {
   return (
     <Router>
       <Routes>
-        <Route path="/" element={<Home/>} />
+        <Route path="/" element={<HomePage/>} />
         <Route path="/company/signin" element={<SignIn />} />
         <Route path="/company/*" element={<CompanyPage  />}/>
         <Route path="/company/signup" element={<Login />} />

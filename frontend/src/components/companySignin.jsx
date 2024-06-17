@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { company_signIn } from "./services/Api";
 import {useNavigate} from "react-router-dom";
+import { FaSpinner } from 'react-icons/fa';
 function CompanySignIn(){
     const [data, setData] = useState({
         Email: '',
@@ -8,6 +9,7 @@ function CompanySignIn(){
       });
       const [disp,setDisp] = useState({display:"none"})
       const [msg,setMsg] = useState("")
+      const [isloading,setIsloading] = useState(false)
       const navigate = useNavigate();
       function email(event){
    
@@ -25,15 +27,23 @@ function CompanySignIn(){
       }
 
       const submit =async ()=>{
-       const res =await company_signIn(data);
-       console.log(res);
-       if(res==="successfull"){
-        navigate("/job-post")
-       }
-       else{
-        setMsg(res);
-        setDisp({display:"flex"})
-       }
+        try {
+          setIsloading(true)
+          const res =await company_signIn(data);
+          console.log(res);
+          if(res==="successfull"){
+           navigate("/job-post")
+          }
+          else{
+           setMsg(res);
+           setDisp({display:"flex"})
+          }
+        } catch (error) {
+          console.log(error);
+        }
+        finally{
+          setIsloading(false)
+        }
       }
       function signUp(){
         navigate("/company/signup")
@@ -68,7 +78,7 @@ function CompanySignIn(){
         <span>{msg}</span>
       </div>
       <div className="submit">
-          <button className="btn" onClick={submit}>Sign Up</button>
+          <button className="btn flex justify-center items-center" onClick={submit}>{isloading?<FaSpinner className="animate-spin text-white" size={20} />:<p>Sign In</p>}</button>
       </div>
     </div>
     </div>

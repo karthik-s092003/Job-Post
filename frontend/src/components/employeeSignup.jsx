@@ -2,9 +2,11 @@ import { useNavigate} from "react-router-dom"
 import "../components/Login.css";
 import { useState } from "react";
 import {emp_Signup} from "./services/Api"
+import { FaSpinner } from 'react-icons/fa';
 function EmpLogin (){
     const [disp,setDisp] = useState({display:"none"})
     const [msg,setMsg] = useState("")
+    const [isloading,setIsloading] = useState(false)
     const [data, setData] = useState({
         Name: '',
         Email: '',
@@ -40,13 +42,21 @@ function EmpLogin (){
         }));
       }
       const handleSubmit =async ()=>{
-        const res =await emp_Signup(data);
-        if(res === "successfull"){
-          navigate("/job-portal");
+        try {
+          setIsloading(true)
+          const res =await emp_Signup(data);
+          if(res === "successfull"){
+            navigate("/job-portal");
+          }
+          else{
+            setMsg(res)
+            setDisp({display:"flex"})
+          }
+        } catch (error) {
+          console.log(error);
         }
-        else{
-          setMsg(res)
-          setDisp({display:"flex"})
+        finally{
+          setIsloading(false)
         }
       }
       function signup(){
@@ -89,7 +99,7 @@ function EmpLogin (){
         <span>{msg}</span>
       </div>
       <div className="submit">
-          <button className="btn" onClick={handleSubmit}>Sign Up</button>
+          <button className="btn flex justify-center items-center" onClick={handleSubmit}>{isloading?<FaSpinner className="animate-spin text-white" size={20} />:<p>Sign In</p>}</button>
       </div>
     </div>
     </div>

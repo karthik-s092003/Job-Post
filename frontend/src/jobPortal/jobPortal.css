@@ -29,8 +29,8 @@ input[type="range"]::-moz-range-thumb {
 
 .job-description ul,
 .job-description ol {
-  padding-left: 20px; /* Adjust padding as needed */
-  list-style: inside; /* Adjust list style as needed */
+  padding-left: 20px; 
+  list-style: inside; 
 }
 
 .job-description ul {
@@ -42,5 +42,5 @@ input[type="range"]::-moz-range-thumb {
 }
 
 .job-description li {
-  margin-bottom: 5px; /* Adjust margin as needed */
+  margin-bottom: 5px; 
 }
