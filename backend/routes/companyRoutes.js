@@ -1,11 +1,12 @@
 const express = require("express")
-const { login, register,decodeToken } = require("../controllers/companyLoginController")
+const { login, register,decodeToken,emailVerification } = require("../controllers/companyLoginController")
 const {createJobPost,deleteJobPost,updateJobPost,getALLJobPost,getJobPost,applied_Jobs,acceptOrRejectApplicant,rejectApplicant,search,getAllApplications,get_Company_details} = require("../controllers/companyPage")
 const router = express.Router()
 const authenticationMiddleware = require("../middleware/auth")
 
 router.route("/login").post(login);
 router.route("/register").post(register);
+router.route("/emailVerification").post(emailVerification);
 router.route("/decode").get(authenticationMiddleware,decodeToken);
 router.route("/add").post(authenticationMiddleware,createJobPost);
 router.route("/delete").delete(authenticationMiddleware,deleteJobPost);

@@ -15,8 +15,11 @@ function Dashboard() {
         const decode = async ()=>{
             try {
                 const cmp = await get_cmpName()
-                const {jobs} = await cmpJobOffers(cmp.cpm)
-                setList([...jobs])
+                const {jobs,msg} = await cmpJobOffers(cmp.cpm)
+                if(msg==="successfull"){
+                    setList([...jobs])
+                }
+                console.log("here = ", cmp);
                 setCmpDetails(cmp)
             } catch (error) {
                 console.error("Error fetching data", error);

@@ -1,6 +1,6 @@
 import axios from 'axios';
-const FETCHURI = "https://jobpost-cknl.onrender.com/api/v1"
-// const FETCHURI ="http://localhost:3060/api/v1"
+// const FETCHURI = "https://jobpost-cknl.onrender.com/api/v1"
+const FETCHURI ="http://localhost:3060/api/v1"
 
 const cmpJobOffers = async (data) => {
     console.log(data);
@@ -50,4 +50,53 @@ const cmpJobOffers = async (data) => {
     }
   }
 
-export {cmpJobOffers,get_cmpName,createJobPost}
+  const company_signIn = async (data) =>{
+    console.log(data);
+    try {
+      const response = await axios.post(`${FETCHURI}/company/login`,data,{
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      })
+      localStorage.setItem('token', response.data.token)
+      console.log(response);
+      return response.data.msg;
+    } catch (error) {
+      console.log('Error during company registration:', error.response.data.msg);
+      return error.response.data.msg;
+    }
+  }
+
+  const company_Signup = async (data) => {
+    console.log(data);
+  
+    try {
+      const response = await axios.post(`${FETCHURI}/company/register`, data, {
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      });
+      localStorage.setItem('token', response.data.token)
+      return response.data.msg;
+    } catch (error) {
+      console.log('Error during company registration:', error.response.data.msg);
+      return error.response.data.msg;
+    }
+  };
+
+  const email_verification = async (email)=>{
+    const data = {email:email}
+    try {
+      const response = await axios.post(`${FETCHURI}/company/emailVerification`,data,{
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      })
+      return response.data.message  
+    } catch (error) {
+      console.log('Error during company registration:', error.response.data.msg);
+      return error.response.data.msg;
+    }
+  }
+
+export {cmpJobOffers,get_cmpName,createJobPost,company_signIn,email_verification,company_Signup}

@@ -2,7 +2,6 @@ import { IoNotificationsOutline } from "react-icons/io5";
 import { FaChevronDown } from "react-icons/fa";
 
 const Navbar = (props) => {
-  
   return <>
     <div className="w-full flex h-16 border-2 justify-center items-center relative bg-white">
         <span className=" absolute left-5 text-blue-600 font-semibold text-2xl">CareerNavigator</span>
