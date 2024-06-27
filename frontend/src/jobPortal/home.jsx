@@ -8,6 +8,7 @@ import { get_all_jobs } from "./services/jobportal";
 import { useEffect, useState } from "react"
 import { get_company_details,getAllLocations,getAllCmp,get_empName } from "./services/jobportal";
 import { searchFilter } from "./services/jobportal";
+import JobPortalForm from "./Job-portal-Form";
 
 function JobPortalDashBoard() {
     const [list,setList] = useState([])
@@ -32,6 +33,7 @@ function JobPortalDashBoard() {
     })
     const [salary,setSalary] = useState(0);
     const [empDetails,setEmpDetails] = useState({Name: 'Log In', Email: ''})
+    const [form,setForm] = useState(false)
 
     const handleCardClick = async (job) => {
       setSelectedJob(job);
@@ -205,9 +207,14 @@ function JobPortalDashBoard() {
         console.log(error);
       }
    }
-
+   const handleForm = ()=>{
+    setForm(!form)
+   }
+   if(form){
+    return <JobPortalForm handleForm={handleForm}/>
+   }
     return <>
-    <div className="w-screen h-screen ">
+    <div className="w-screen h-screen relative">
         <NavBar emp={empDetails}/>
         <div className="w-full h-[90%] flex">
             <div className="w-[20%] h-full overflow-y-scroll bg-white">
@@ -302,7 +309,7 @@ function JobPortalDashBoard() {
               )}
             </div>
             <div className="w-[55%] h-full">
-             <Details selectedJob={selectedJob} companyDetails={companyDetails} apply={true}/>
+             <Details selectedJob={selectedJob} companyDetails={companyDetails} apply={true} handleForm={handleForm}/>
             </div>
           </div> 
 

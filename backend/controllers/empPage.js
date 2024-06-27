@@ -1,6 +1,83 @@
 const Jobs = require("../modules/Jobs")
 const appliedJobs = require("../modules/appliedJobs")
 const Status = require("../modules/status")
+const Application = require("../modules/jobApplication")
+const { getStorage, ref, listAll,uploadBytesResumable, getDownloadURL } = require('firebase/storage');
+const { storage } = require('./firebaseConfig');
+
+
+const listFiles = async (req, res) => {
+    const empName = req.params.empName;
+  
+    if (!empName) {
+      return res.status(400).send('Employee name is required.');
+    }
+  
+    const listRef = ref(storage, empName);
+  
+    try {
+      const resList = await listAll(listRef);
+      const files = await Promise.all(
+        resList.items.map(async (itemRef) => {
+          const downloadURL = await getDownloadURL(itemRef);
+          return {
+            name: itemRef.name,
+            url: downloadURL,
+          };
+        })
+      );
+      res.status(200).send(files);
+    } catch (error) {
+      console.error('Error listing files:', error);
+      res.status(500).send('Error listing files.');
+    }
+  };
+  
+
+const handleUpload = async (req, res) => {
+    const file = req.file;
+    const empName = req.body.empName;
+  
+    if (!file) {
+      return res.status(400).send('No file uploaded.');
+    }
+  
+    if (!empName) {
+      return res.status(400).send('Employee name is required.');
+    }
+  
+    try {
+      const storageRef = ref(storage, `${empName}/${Date.now()}_${file.originalname}`);
+      const metadata = {
+        contentType: file.mimetype,
+      };
+  
+      const uploadTask = uploadBytesResumable(storageRef, file.buffer, metadata);
+  
+      uploadTask.on(
+        'state_changed',
+        (snapshot) => {
+          // Optional: Handle progress
+          const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+          console.log('Upload is ' + progress + '% done');
+        },
+        (error) => {
+          // Handle unsuccessful uploads
+          console.error('Upload failed:', error);
+          res.status(500).send('Upload failed.');
+        },
+        () => {
+          // Handle successful uploads on complete
+          getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
+            res.status(200).send({ url: downloadURL ,msg:"successfull"});
+          });
+        }
+      );
+    } catch (error) {
+      console.error('Error uploading file:', error);
+      res.status(500).send('Error uploading file.');
+    }
+  };
 
 const searchJobs = async (req,res)=>{
     const  {companyName,location,title,salary,jobType,workspaceType} = req.query;
@@ -37,18 +114,20 @@ const searchJobs = async (req,res)=>{
 }
 
 const applyJob = async (req,res) =>{
-    const {Name,title,companyName,salary,Qualification,Experience,Previous_ctc,ReasonToJoin} = req.body
-    if(!title||!companyName||!salary||!Name||!Qualification||!Experience||!Previous_ctc||!ReasonToJoin){
+    const {FirstName,LastName,Email ,Reason,City,State,Country,jobId,companyId} = req.body
+    if(!FirstName||!LastName||!Email||!Reason||!City||!State||!Country||!jobId||!companyId){
+        const body = req.body;
         return res.status(400).json({msg:"Make sure you enter all the details"})
     }
     try {
-        const job = await appliedJobs.create(req.body)
-        res.status(201).json({ msg:"successfull"})
+        const job = await Application.create(req.body)
+        res.status(201).json({ msg:"successfull",job})
     } catch (error) {
-        console.log(req.body);
+        console.log(error);
         res.status(400).json({msg:"something went wrong...."})
     }
 }
+
 
 const appliedJobsOfEmp = async (req,res)=>{
     const {Name} = req.query;
@@ -113,4 +192,4 @@ const getCompanyList = async (req,res)=>{
     }
 }
 
-module.exports = {searchJobs,appliedJobsOfEmp,applyJob,decodeToken,getAllJobs,getAllStatus,getLocationList,getCompanyList}
+module.exports = {searchJobs,listFiles,handleUpload,appliedJobsOfEmp,applyJob,decodeToken,getAllJobs,getAllStatus,getLocationList,getCompanyList}
