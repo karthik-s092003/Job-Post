@@ -1,6 +1,6 @@
 import axios from 'axios';
-// const FETCHURI = "https://jobpost-cknl.onrender.com/api/v1"
-const FETCHURI ="http://localhost:3060/api/v1"
+const FETCHURI = "https://jobpost-cknl.onrender.com/api/v1"
+// const FETCHURI ="http://localhost:3060/api/v1"
 
 
 const company_SignIn = async (data) => {
@@ -129,5 +129,38 @@ const get_empName = async ()=>{
   }
 }
 
-export {company_LogIn,company_SignIn,get_all_jobs,get_company_details,searchFilter,getAllLocations,getAllCmp,get_empName}
+const uploadResume = async (data)=>{
+  const token = localStorage.getItem('token')
+  const formData = new FormData();
+  formData.append('empName', data.FirstName);
+  formData.append('file', data.resume);
+
+  try {
+    const res = await axios.post(`${FETCHURI}/emp/upload`,formData,{
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    })
+    return res.data
+  } catch (error) {
+    console.log(error); 
+  }
+}
+
+const applyForJob = async (data)=>{
+  const token = localStorage.getItem('token')
+  try {
+    console.log("data = ", data);
+    const res = await axios.post(`${FETCHURI}/emp/applyjob`,data,{
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    })
+    return res.data
+  } catch (error) {
+    console.log(error); 
+  }
+}
+
+export {company_LogIn,company_SignIn,applyForJob,get_all_jobs,get_company_details,searchFilter,getAllLocations,getAllCmp,get_empName,uploadResume}
   

@@ -211,7 +211,7 @@ function JobPortalDashBoard() {
     setForm(!form)
    }
    if(form){
-    return <JobPortalForm handleForm={handleForm}/>
+    return <JobPortalForm handleForm={handleForm} selectedJob={selectedJob}/>
    }
     return <>
     <div className="w-screen h-screen relative">
