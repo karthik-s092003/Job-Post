@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import { PhotoIcon } from '@heroicons/react/24/solid';
-import { uploadResume } from './services/jobportal';
-import { applyForJob } from './services/jobportal';
+import { uploadResume, applyForJob } from './services/jobportal';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 export default function JobPortalForm(props) {
   const [formData, setFormData] = useState({
@@ -11,11 +12,13 @@ export default function JobPortalForm(props) {
     Reason: '',
     City: '',
     Country: '',
-    state: '',
+    State: '',
     resume: null,
-    jobId:props.selectedJob._id,
-    companyId:props.selectedJob.companyId
+    jobId: props.selectedJob._id,
+    companyId: props.selectedJob.companyId
   });
+
+  const [loading, setLoading] = useState(false);
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -32,38 +35,61 @@ export default function JobPortalForm(props) {
     }));
   };
 
-  const handleSubmit = async(e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // Process formData or send it to your backend
+    setLoading(true); // Start loading animation
+
     try {
-      console.log(formData);
-      // const res = await uploadResume(formData);
+      const res = await uploadResume(formData);
       const applyJob = await applyForJob(formData);
+
       console.log("apply = ", applyJob);
-      // console.log("response = ", res);
+      console.log("response = ", res);
+
+      if (applyJob.msg === "successfull" && res.msg === "successfull") {
+        // Show toast notification on success
+        toast.success('Registered successfully!', {
+          position: "top-right",
+          autoClose: 3000, // Close the toast after 3 seconds
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+        });
+      }
     } catch (error) {
       console.log(error);
+    } finally {
+      setLoading(false); // Stop loading animation
     }
   };
 
   return (
     <div className='w-screen p-5 overflow-x-hidden'>
+      <ToastContainer />
       <form onSubmit={handleSubmit}>
+      {loading && (
+          <div className="fixed inset-0 flex items-center justify-center bg-gray-800 bg-opacity-50">
+            <div className="animate-spin rounded-full h-32 w-32 border-t-2 border-b-2 border-gray-900"></div>
+          </div>
+        )}
+
         <div className="space-y-12">
           <h2 className="text-base font-semibold leading-7 text-gray-900">Application form</h2>
           <div>
             <div className="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
               <div className="sm:col-span-3">
-                <label htmlFor="first-name" className="block text-sm font-medium leading-6 text-gray-900">
+                <label htmlFor="FirstName" className="block text-sm font-medium leading-6 text-gray-900">
                   First name
                 </label>
                 <div className="mt-2">
                   <input
                     type="text"
-                    name="firstName"
-                    id="first-name"
+                    name="FirstName"
+                    id="FirstName"
                     autoComplete="given-name"
-                    value={formData.firstName}
+                    value={formData.FirstName}
                     onChange={handleInputChange}
                     className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                   />
@@ -71,16 +97,16 @@ export default function JobPortalForm(props) {
               </div>
 
               <div className="sm:col-span-3">
-                <label htmlFor="last-name" className="block text-sm font-medium leading-6 text-gray-900">
+                <label htmlFor="LastName" className="block text-sm font-medium leading-6 text-gray-900">
                   Last name
                 </label>
                 <div className="mt-2">
                   <input
                     type="text"
-                    name="lastName"
-                    id="last-name"
+                    name="LastName"
+                    id="LastName"
                     autoComplete="family-name"
-                    value={formData.lastName}
+                    value={formData.LastName}
                     onChange={handleInputChange}
                     className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                   />
@@ -88,16 +114,16 @@ export default function JobPortalForm(props) {
               </div>
 
               <div className="sm:col-span-4">
-                <label htmlFor="email" className="block text-sm font-medium leading-6 text-gray-900">
+                <label htmlFor="Email" className="block text-sm font-medium leading-6 text-gray-900">
                   Email address
                 </label>
                 <div className="mt-2">
                   <input
-                    id="email"
-                    name="email"
+                    id="Email"
+                    name="Email"
                     type="email"
                     autoComplete="email"
-                    value={formData.email}
+                    value={formData.Email}
                     onChange={handleInputChange}
                     className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                   />
@@ -105,16 +131,16 @@ export default function JobPortalForm(props) {
               </div>
 
               <div className="col-span-full">
-                <label htmlFor="reason" className="block text-sm font-medium leading-6 text-gray-900">
+                <label htmlFor="Reason" className="block text-sm font-medium leading-6 text-gray-900">
                   Reason to join
                 </label>
                 <div className="mt-2">
                   <input
                     type="text"
-                    name="reason"
-                    id="reason"
+                    name="Reason"
+                    id="Reason"
                     autoComplete="reason"
-                    value={formData.reason}
+                    value={formData.Reason}
                     onChange={handleInputChange}
                     className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                   />
@@ -122,16 +148,16 @@ export default function JobPortalForm(props) {
               </div>
 
               <div className="sm:col-span-2 sm:col-start-1">
-                <label htmlFor="city" className="block text-sm font-medium leading-6 text-gray-900">
+                <label htmlFor="City" className="block text-sm font-medium leading-6 text-gray-900">
                   City
                 </label>
                 <div className="mt-2">
                   <input
                     type="text"
-                    name="city"
-                    id="city"
+                    name="City"
+                    id="City"
                     autoComplete="address-level2"
-                    value={formData.city}
+                    value={formData.City}
                     onChange={handleInputChange}
                     className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                   />
@@ -139,16 +165,16 @@ export default function JobPortalForm(props) {
               </div>
 
               <div className="sm:col-span-2">
-                <label htmlFor="country" className="block text-sm font-medium leading-6 text-gray-900">
+                <label htmlFor="Country" className="block text-sm font-medium leading-6 text-gray-900">
                   Country
                 </label>
                 <div className="mt-2">
                   <input
                     type="text"
-                    name="country"
-                    id="country"
+                    name="Country"
+                    id="Country"
                     autoComplete="address-level1"
-                    value={formData.country}
+                    value={formData.Country}
                     onChange={handleInputChange}
                     className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                   />
@@ -156,16 +182,16 @@ export default function JobPortalForm(props) {
               </div>
 
               <div className="sm:col-span-2">
-                <label htmlFor="state" className="block text-sm font-medium leading-6 text-gray-900">
+                <label htmlFor="State" className="block text-sm font-medium leading-6 text-gray-900">
                   State
                 </label>
                 <div className="mt-2">
                   <input
                     type="text"
-                    name="state"
-                    id="state"
+                    name="State"
+                    id="State"
                     autoComplete="postal-code"
-                    value={formData.state}
+                    value={formData.State}
                     onChange={handleInputChange}
                     className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                   />
