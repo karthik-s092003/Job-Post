@@ -131,4 +131,21 @@ const cmpJobOffers = async (data) => {
       return error.response.data.msg;
     }
   }
-export {cmpJobOffers,getJobApplicants,get_cmpName,createJobPost,company_signIn,email_verification,company_Signup,getJobTitles}
+
+  const acceptOrReject = async(data)=>{
+    const token = localStorage.getItem('token')
+    try {
+      const res = await axios.post(`${FETCHURI}/company/acceptorreject`,data,{
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+      return res.data;
+    } catch (error) {
+  
+      console.log(error);
+      return error.response.data.msg
+    }
+  }
+
+export {cmpJobOffers,acceptOrReject,getJobApplicants,get_cmpName,createJobPost,company_signIn,email_verification,company_Signup,getJobTitles}

@@ -1,7 +1,9 @@
 import { useEffect, useState } from "react";
 import Navbar from "./navbar";
-import { get_cmpName, getJobTitles, getJobApplicants } from "./services/jobPost";
+import { get_cmpName, getJobTitles, getJobApplicants, acceptOrReject } from "./services/jobPost";
 import ApplicantCard from "./ApplicantCard";
+import { toast, ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';  // Ensure the styles are imported
 
 function JobApplications() {
     const [cmpDetails, setCmpDetails] = useState({});
@@ -34,6 +36,19 @@ function JobApplications() {
         }
     };
 
+    const AcceptOrReject = async (data) => {
+        try {
+            const res = await acceptOrReject(data);
+            if (res.newList) {
+                setApplicants(res.newList);
+                toast.success(`Applicant ${data.status.toLowerCase()} successfully!`);
+            }
+        } catch (error) {
+            console.error("Error updating applicant status", error);
+            toast.error(`Error ${data.status.toLowerCase()} applicant`);
+        }
+    }
+
     return (
         <div className="w-screen h-screen bg-slate-100">
             <Navbar cmp={cmpDetails} />
@@ -60,7 +75,7 @@ function JobApplications() {
                             <p className="text-gray-500">No applicants for the selected job</p>
                         ) : (
                             applicants.map((applicant) => (
-                                <ApplicantCard key={applicant.empId} data={applicant} />
+                                <ApplicantCard key={applicant.empId} data={applicant} AcceptOrReject={AcceptOrReject} />
                             ))
                         )
                     ) : (
@@ -68,6 +83,7 @@ function JobApplications() {
                     )}
                 </div>
             </div>
+            <ToastContainer />
         </div>
     );
 }

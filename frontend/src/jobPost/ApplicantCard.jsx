@@ -1,14 +1,53 @@
-import React from 'react';
+import React, { useState } from 'react';
+import MessageModal from './MessageModal';
 
-function ApplicantCard({ data }) {
+function ApplicantCard({ data, AcceptOrReject }) {
+    const [isModalOpen, setIsModalOpen] = useState(false);
+    const [modalPurpose, setModalPurpose] = useState('');
+    const [statusData, setStatusData] = useState({
+        FirstName: data.FirstName,
+        LastName: data.LastName,
+        msg: '',
+        status: '',
+        companyId: data.companyId,
+        jobId: data.jobId,
+        empId: data.empId
+    });
+
     const handleAccept = () => {
-        // Implement accept logic here
-        console.log("Applicant accepted");
+        setModalPurpose('Accepted');
+        setIsModalOpen(true);
     };
 
     const handleReject = () => {
-        // Implement reject logic here
-        console.log("Applicant rejected");
+        setModalPurpose('Rejected');
+        setIsModalOpen(true);
+    };
+
+    const handleModalSubmit = (message) => {
+        setStatusData(prevState => ({
+            ...prevState,
+            msg: message,
+            status: modalPurpose
+        }));
+        updateApplicantStatus(modalPurpose, message);
+    };
+
+    const updateApplicantStatus = async (status, message) => {
+        try {
+            await AcceptOrReject({
+                FirstName: statusData.FirstName,
+                LastName: statusData.LastName,
+                msg: message,
+                status: status,
+                companyId: statusData.companyId,
+                jobId: statusData.jobId,
+                empId: statusData.empId
+            });
+           
+        } catch (error) {
+            console.log(`Error updating applicant status: ${error.message}`);
+        }
     };
 
     return (
@@ -54,6 +93,12 @@ function ApplicantCard({ data }) {
                     Reject
                 </button>
             </div>
+            <MessageModal
+                isOpen={isModalOpen}
+                onClose={() => setIsModalOpen(false)}
+                onSubmit={handleModalSubmit}
+            />
+           
         </div>
     );
 }
