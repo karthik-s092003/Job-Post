@@ -89,23 +89,20 @@ const applied_Jobs = async (req,res)=>{
 }
 
 const acceptOrRejectApplicant = async (req,res)=>{
-    const {Name,msg,status,companyName,title} = req.body
-    if(!Name||!msg||!status||!companyName||!title){
+    const {FirstName,LastName,msg,status,companyId,jobId,empId} = req.body
+    if(!FirstName||!LastName||!msg||!status||!companyId||!jobId||!empId){
         return res.status(400).json({msg:"Please enter all the details"})
     }
     let job;
     try {
-        job = await appliedJobs.findOneAndDelete({Name:Name,companyName:companyName,title:title})
+        job = await Application.findOneAndDelete({empId:empId,jobId:jobId})
         if(!job){
             return res.status(400).json({msg:`Applicant not found`})
          }
         await Status.create(req.body)
         res.status(200).json({msg:"successfull"})
     } catch (error) {
-        if(!job){
-            return res.status(400).json({msg:`Applicant not found`})
-         }
-        res.status(400).json({msg:"something went wrong...."})
+        res.status(400).json({msg:"something went wrong....",error})
     }
 }
 

@@ -1,17 +1,25 @@
 const mongoose = require('mongoose')
 
 const status = new mongoose.Schema({
-    Name:{
+    empId:{
+        type: mongoose.Schema.Types.ObjectId,
+        required:true,
+    },
+    FirstName:{
         type:String,
         required:[true,'must provoid name'],
     },
-    companyName: {
-        type: String,
-        required: true,    
-    },
-    title:{
+    LastName:{
         type:String,
         required:[true,'must provoid name'],
+    },
+    companyId: {
+        type: mongoose.Schema.Types.ObjectId,
+        required:true,   
+    },
+    jobId:{
+        type: mongoose.Schema.Types.ObjectId,
+        required:true,
     },
     msg:{
         type:String,
