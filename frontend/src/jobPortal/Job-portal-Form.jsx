@@ -1,8 +1,9 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { PhotoIcon } from '@heroicons/react/24/solid';
 import { uploadResume, applyForJob } from './services/jobportal';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { get_empName } from './services/jobportal';
 
 export default function JobPortalForm(props) {
   const [formData, setFormData] = useState({
@@ -16,8 +17,24 @@ export default function JobPortalForm(props) {
     resume: null,
     jobId: props.selectedJob._id,
     companyId: props.selectedJob.companyId,
+    empId:'',
     resumeUrl:'',
   });
+  useEffect(()=>{
+    const decode = async ()=>{
+      try {
+          const emp = await get_empName()
+          setFormData((prevState) => ({
+            ...prevState,
+            empId:emp.empId
+          }))
+          console.log(emp)
+      } catch (error) {
+          console.error("Error fetching data", error);
+      }
+  }
+    decode()
+  },[])
 
   const [loading, setLoading] = useState(false);
 
@@ -47,7 +64,34 @@ export default function JobPortalForm(props) {
         ...prevState,
         resumeUrl:res.url
       }));
-      const applyJob = await applyForJob(formData);
+      console.log("hello = ",{
+        FirstName: formData.FirstName,
+        LastName: formData.LastName,
+        Email: formData.Email,
+        Reason: formData.Reason,
+        City: formData.City,
+        Country: formData.Country,
+        State: formData.State,
+        resume: formData.resume,
+        jobId: props.selectedJob._id,
+        companyId: props.selectedJob.companyId,
+        empId:formData.empId,
+        resumeUrl:res.url,
+      });
+      const applyJob = await applyForJob({
+        FirstName: formData.FirstName,
+        LastName: formData.LastName,
+        Email: formData.Email,
+        Reason: formData.Reason,
+        City: formData.City,
+        Country: formData.Country,
+        State: formData.State,
+        resume: formData.resume,
+        jobId: props.selectedJob._id,
+        companyId: props.selectedJob.companyId,
+        empId:formData.empId,
+        resumeUrl:res.url,
+      });
 
       console.log("apply = ", applyJob);
       console.log("response = ", res);
