@@ -41,6 +41,10 @@ const jobApplicationSchema = new mongoose.Schema({
         type: String,
         required: [true, 'Resume URL is required'],
     },
+    empId:{
+        type:String,
+        required:true
+    },
 });
 
 module.exports = mongoose.model('JobApplication', jobApplicationSchema);
