@@ -10,8 +10,8 @@ const authenticationMiddleware = async (req, res, next) => {
 
   try {
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
-    const { Email, Name } = decoded
-    req.user = {Name , Email}
+    const { Email, Name, empId } = decoded
+    req.user = {Name , Email, empId}
     next();
   } catch (error) {
     res.status(404).send({ msg: "Not authorized to access this route" });

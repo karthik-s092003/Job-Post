@@ -146,7 +146,7 @@ const appliedJobsOfEmp = async (req,res)=>{
 
 const decodeToken = async (req,res)=>{
     try {
-        res.status(200).json({Name:req.user.Name,Email:req.user.Email})
+        res.status(200).json({Name:req.user.Name,Email:req.user.Email,empId:req.user.empId})
     } catch (error) {
         res.status(400).json({msg:"something went wrong"})
     }
