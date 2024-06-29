@@ -12,7 +12,8 @@ const login = async (req,res)=>{
         if(emp.length>0){
             if(Password === emp[0].Password){
                 const Name = emp[0].Name
-                const token = jwt.sign({ Email, Name }, process.env.JWT_SECRET, {
+                const empId = emp[0]._id
+                const token = jwt.sign({ Email, Name,empId }, process.env.JWT_SECRET, {
                     expiresIn: "30d",
                   });
                 res.status(200).json({msg:"successfull",token:token})
@@ -37,11 +38,12 @@ const register = async (req,res)=>{
     if(Password !== confirmPassword){
         return res.status(400).json({msg:"incorrect password"})
     }
-    const token = jwt.sign({ Email, Password }, process.env.JWT_SECRET, {
-        expiresIn: "30d",
-      });
     try{
         const emp = await Emp.create(req.body)
+        const empId = emp._id
+        const token = jwt.sign({ Email, Name, empId }, process.env.JWT_SECRET, {
+            expiresIn: "30d",
+          });
         res.json({emp,token:token,msg:"successfull"})
     }
     catch(err){
