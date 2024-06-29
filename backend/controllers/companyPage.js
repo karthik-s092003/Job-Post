@@ -100,7 +100,8 @@ const acceptOrRejectApplicant = async (req,res)=>{
             return res.status(400).json({msg:`Applicant not found`})
          }
         await Status.create(req.body)
-        res.status(200).json({msg:"successfull"})
+        const newList = await Application.find({jobId:jobId});
+        res.status(200).json({msg:"successfull",newList})
     } catch (error) {
         res.status(400).json({msg:"something went wrong....",error})
     }
