@@ -8,6 +8,7 @@ const Navbar = (props) => {
         <div className="flex gap-8">
             <a href="/job-post" className=" font-semibold">Home</a>
             <a href="/job-post/form" className=" font-semibold">Post Job</a>
+            <a href="/application-forms" className=" font-semibold">Job Applications</a>
         </div>
         <div className="flex absolute right-4 gap-3 items-center">
             <IoNotificationsOutline className="text-2xl"/>

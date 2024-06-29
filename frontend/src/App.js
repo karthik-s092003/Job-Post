@@ -16,6 +16,7 @@ import HomePage from "./homeAndLogin/homePage";
 import CMPSignIn from "./homeAndLogin/cmpLogin";
 import CMPSignUP from "./homeAndLogin/cmpSignUp";
 import JobPortalForm from "./jobPortal/Job-portal-Form";
+import JobApplications from "./jobPost/jobApplications";
 
 function App() {
   return (
@@ -36,6 +37,7 @@ function App() {
         <Route path="/job-post-signin" element={<CMPSignIn/>}></Route>
         <Route path="/job-post-signup" element={<CMPSignUP/>}></Route>
         <Route path="/job-portal-form" element={<JobPortalForm/>}></Route>
+        <Route path="/application-forms" element={<JobApplications/>}></Route>
       </Routes>
     </Router>
   );
