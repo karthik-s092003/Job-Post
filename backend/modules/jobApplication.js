@@ -36,7 +36,11 @@ const jobApplicationSchema = new mongoose.Schema({
     companyId:{
         type:String,
         required:true
-    }
+    },
+    resumeUrl: {
+        type: String,
+        required: [true, 'Resume URL is required'],
+    },
 });
 
 module.exports = mongoose.model('JobApplication', jobApplicationSchema);

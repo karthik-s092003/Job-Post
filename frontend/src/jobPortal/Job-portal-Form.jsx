@@ -15,7 +15,8 @@ export default function JobPortalForm(props) {
     State: '',
     resume: null,
     jobId: props.selectedJob._id,
-    companyId: props.selectedJob.companyId
+    companyId: props.selectedJob.companyId,
+    resumeUrl:'',
   });
 
   const [loading, setLoading] = useState(false);
@@ -41,6 +42,11 @@ export default function JobPortalForm(props) {
 
     try {
       const res = await uploadResume(formData);
+      if(res.msg === "successfull"){
+        setFormData((prevState) => ({
+        ...prevState,
+        resumeUrl:res.url
+      }));
       const applyJob = await applyForJob(formData);
 
       console.log("apply = ", applyJob);
@@ -58,6 +64,8 @@ export default function JobPortalForm(props) {
           progress: undefined,
         });
       }
+    }
+      
     } catch (error) {
       console.log(error);
     } finally {

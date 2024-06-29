@@ -114,8 +114,8 @@ const searchJobs = async (req,res)=>{
 }
 
 const applyJob = async (req,res) =>{
-    const {FirstName,LastName,Email ,Reason,City,State,Country,jobId,companyId} = req.body
-    if(!FirstName||!LastName||!Email||!Reason||!City||!State||!Country||!jobId||!companyId){
+    const {FirstName,LastName,Email ,Reason,City,State,Country,jobId,companyId,resumeUrl} = req.body
+    if(!FirstName||!LastName||!Email||!Reason||!City||!State||!Country||!jobId||!companyId||!resumeUrl){
         const body = req.body;
         console.log(body);
         return res.status(400).json({msg:"Make sure you enter all the details"})
