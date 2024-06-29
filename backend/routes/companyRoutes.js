@@ -1,6 +1,6 @@
 const express = require("express")
 const { login, register,decodeToken,emailVerification } = require("../controllers/companyLoginController")
-const {createJobPost,deleteJobPost,updateJobPost,getALLJobPost,getJobPost,applied_Jobs,acceptOrRejectApplicant,rejectApplicant,search,getAllApplications,get_Company_details} = require("../controllers/companyPage")
+const {createJobPost,getJobApplicants,getAllOfferedJobTitles,deleteJobPost,updateJobPost,getALLJobPost,getJobPost,applied_Jobs,acceptOrRejectApplicant,rejectApplicant,search,getAllApplications,get_Company_details} = require("../controllers/companyPage")
 const router = express.Router()
 const authenticationMiddleware = require("../middleware/auth")
 
@@ -18,7 +18,9 @@ router.route("/acceptorreject").post(authenticationMiddleware,acceptOrRejectAppl
 router.route("/reject").delete(authenticationMiddleware,rejectApplicant);
 router.route("/search").get(authenticationMiddleware,search)
 router.route("/jobapplications").get(authenticationMiddleware,getAllApplications);
-router.route("/details").get(authenticationMiddleware,get_Company_details)
+router.route("/details").get(authenticationMiddleware,get_Company_details);
+router.route("/jobs").get(authenticationMiddleware,getAllOfferedJobTitles);
+router.route("/applicants").get(authenticationMiddleware,getJobApplicants);
 
 
 module.exports = router

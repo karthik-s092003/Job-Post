@@ -2,6 +2,7 @@ const Jobs = require("../modules/Jobs")
 const appliedJobs = require("../modules/appliedJobs")
 const company = require("../modules/company")
 const Status = require("../modules/status")
+const Application = require("../modules/jobApplication")
 
 const getALLJobPost = async (req,res)=>{
     try {
@@ -172,4 +173,26 @@ const get_Company_details = async(req,res)=>{
     }
 }
 
-module.exports = {createJobPost,deleteJobPost,updateJobPost,getALLJobPost,getJobPost,applied_Jobs,acceptOrRejectApplicant,rejectApplicant,search,getAllApplications,get_Company_details}
+const getAllOfferedJobTitles = async (req, res) => {
+    const {cmpId} = req.user;
+    try {
+        const titles = await Jobs.find({ companyId: cmpId }, 'title'); 
+        res.status(200).json(titles);
+    } catch (error) {
+        res.status(500).json({ msg: "something went wrong",error });
+    }
+}
+
+const getJobApplicants = async (req,res) =>{
+    const {cmpId} = req.user;
+    const {jobId} = req.query;
+    try {
+        const Applicants = await Application.find({companyId:cmpId,jobId:jobId})
+        res.status(200).json(Applicants);
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({ msg: "something went wrong",error});
+    }
+}
+
+module.exports = {getJobApplicants,createJobPost,getAllOfferedJobTitles,deleteJobPost,updateJobPost,getALLJobPost,getJobPost,applied_Jobs,acceptOrRejectApplicant,rejectApplicant,search,getAllApplications,get_Company_details}

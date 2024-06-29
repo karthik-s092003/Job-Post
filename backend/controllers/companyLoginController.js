@@ -13,7 +13,8 @@ const login = async (req,res)=>{
         if(company.length>0){
             if(Password === company[0].Password){
                 const Cmp = company[0].companyName;
-                const token = jwt.sign({ Email, Cmp }, process.env.JWT_SECRET, {
+                const cmpId = company[0]._id;
+                const token = jwt.sign({ Email, Cmp, cmpId }, process.env.JWT_SECRET, {
                     expiresIn: "30d",
                   });
                 res.status(200).json({msg:"successfull",token:token})
@@ -46,10 +47,10 @@ const register = async (req,res)=>{
         if(Password !== confirmPassword){
             return res.status(200).json({msg:"incorrect password"})
         }
-        const token = jwt.sign({ Email, Cmp:companyName }, process.env.JWT_SECRET, {
+        const company = await Company.create(req.body)
+        const token = jwt.sign({ Email, Cmp:companyName,cmpId:company._id }, process.env.JWT_SECRET, {
            expiresIn: "30d",
         });
-        const company = await Company.create(req.body)
         res.json({company,token:token,msg:"successfull"})
     }
     catch(err){
@@ -69,9 +70,8 @@ const register = async (req,res)=>{
 
 const decodeToken = async (req,res)=>{
     try {
-        const {Cmp} = req.user;
-        const company = await Company.find({companyName:Cmp})
-        res.status(200).json({cpm:Cmp,email:req.user.Email,id:company[0]._id})
+        const {Cmp , Email, cmpId} = req.user;
+        res.status(200).json({cpm:Cmp,email:Email,cmpId:cmpId})
     } catch (error) {
         res.status(400).json({msg:"something went wrong"})
     }
