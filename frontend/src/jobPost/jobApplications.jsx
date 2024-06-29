@@ -1,35 +1,75 @@
-import { useEffect, useState } from "react"
-import Navbar from "./navbar"
-import { get_cmpName } from "./services/jobPost"
-function JobApplications(){
-    const [cmpDetails,setCmpDetails] = useState({})
-    useEffect(()=>{
-        const decode = async ()=>{
+import { useEffect, useState } from "react";
+import Navbar from "./navbar";
+import { get_cmpName, getJobTitles, getJobApplicants } from "./services/jobPost";
+import ApplicantCard from "./ApplicantCard";
+
+function JobApplications() {
+    const [cmpDetails, setCmpDetails] = useState({});
+    const [titles, setTitles] = useState([]);
+    const [selectedTitle, setSelectedTitle] = useState(null);
+    const [applicants, setApplicants] = useState([]);
+
+    useEffect(() => {
+        const fetchData = async () => {
             try {
-                const cmp = await get_cmpName()
-                setCmpDetails(cmp)
+                const cmp = await get_cmpName();
+                const titles = await getJobTitles();
+                setTitles(titles);
+                setCmpDetails(cmp);
             } catch (error) {
                 console.error("Error fetching data", error);
             }
+        };
+
+        fetchData();
+    }, []);
+
+    const handleTitleClick = async (title) => {
+        setSelectedTitle(title);
+        try {
+            const applicants = await getJobApplicants(title._id);
+            setApplicants(applicants);
+        } catch (error) {
+            console.error("Error fetching applicants", error);
         }
-          decode()
-    },[])
+    };
 
-    return <>
+    return (
         <div className="w-screen h-screen bg-slate-100">
-            <Navbar cmp={cmpDetails}/>
+            <Navbar cmp={cmpDetails} />
             <div className="w-full h-[90%] flex">
-                <div className="w-[25%] h-full overflow-y-scroll bg-white">
-
+                <div className="w-[20%] h-full overflow-y-scroll bg-white flex flex-col gap-3 p-8">
+                    <h1 className="text-base font-bold">JOB TITLE</h1>
+                    {titles.length === 0 ? (
+                        <p className="text-gray-500">No job offers</p>
+                    ) : (
+                        titles.map((title) => (
+                            <span
+                                key={title._id}
+                                className={`text-sm cursor-pointer ${selectedTitle && selectedTitle._id === title._id ? 'text-blue-600' : ''}`}
+                                onClick={() => handleTitleClick(title)}
+                            >
+                                {title.title}
+                            </span>
+                        ))
+                    )}
                 </div>
-                <div className="h-full w-[75%] p-10 flex flex-col items-center">
-                    
+                <div className="h-full w-[80%] p-10 flex flex-col items-center overflow-y-scroll">
+                    {selectedTitle ? (
+                        applicants.length === 0 ? (
+                            <p className="text-gray-500">No applicants for the selected job</p>
+                        ) : (
+                            applicants.map((applicant) => (
+                                <ApplicantCard key={applicant.empId} data={applicant} />
+                            ))
+                        )
+                    ) : (
+                        <p className="text-gray-500">Please select a job title to see the applicants</p>
+                    )}
                 </div>
             </div>
-
         </div>
-
-    </>
+    );
 }
 
-export default JobApplications
+export default JobApplications;

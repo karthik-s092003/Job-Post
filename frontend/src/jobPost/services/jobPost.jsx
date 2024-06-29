@@ -99,4 +99,36 @@ const cmpJobOffers = async (data) => {
     }
   }
 
-export {cmpJobOffers,get_cmpName,createJobPost,company_signIn,email_verification,company_Signup}
+  const getJobTitles = async ()=>{
+    const token = localStorage.getItem('token')
+    try {
+      const res = await axios.get(`${FETCHURI}/company/jobs`,{
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+      console.log(res.data);
+      return res.data;
+    } catch (error) {
+      console.log(error);
+      return error.response.data.msg;
+    }
+  }
+
+
+  const getJobApplicants = async (id)=>{
+    const token = localStorage.getItem('token')
+    try {
+      const res = await axios.get(`${FETCHURI}/company/applicants?jobId=${id}`,{
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+      console.log(res.data);
+      return res.data;
+    } catch (error) {
+      console.log(error);
+      return error.response.data.msg;
+    }
+  }
+export {cmpJobOffers,getJobApplicants,get_cmpName,createJobPost,company_signIn,email_verification,company_Signup,getJobTitles}
